@@ -63,9 +63,9 @@ int main() {
 
     Container<AbstractProduct*> contenitore;
 
-    AbstractProduct* p = new Fisico(1, 28, "porcospino", true);
-    AbstractProduct* q = new Virtuale(2, 25, "mama");
-    AbstractProduct* r = new Noleggio(3, 13, "dio", "leonardo", "anita");
+    AbstractProduct* p = new Fisico(1, 28.99, "porcospino", true);
+    AbstractProduct* q = new Virtuale(2, 25.99, "mama");
+    AbstractProduct* r = new Noleggio(3, 13.99, "dio", "leonardo", "anita");
 
 
     // TEST visitor
