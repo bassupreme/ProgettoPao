@@ -18,8 +18,8 @@ public:
     virtual ~IConverter() {};
     IConverter(IReader& r) : reader(r) {};
     const IReader& getReader() const { return reader; }; // implementazione di default
-    virtual string fromObject(const AbstractProduct* item) const = 0; 
-    virtual AbstractProduct* toObject(const string& json) const = 0;
+    virtual string fromObject(const AbstractProduct* item) = 0; 
+    virtual AbstractProduct* toObject(const string& json) = 0;
     // NOTA BENE: in questi due metodi virtuali string é solamente
     // un rimpiazzo per quello che sarà alla fine QJsonObject
 
