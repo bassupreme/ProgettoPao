@@ -13,8 +13,8 @@
 7. Implementare i seguenti metodi:
     1. createItem()
     2. updateItem()
-    3. deleteItem()
-    4. showItem()
+    3. showItem()
+    4. deleteItem()
 
 # IDEE
 
