@@ -15,3 +15,5 @@
 
 1. Mio ResultWidget: utilizzare una QScrollArea per poter mostrare i risultati di un filtro 
 2. Classe filter: modella un filtro che viene fatto sugli oggetti del contenitore. 
+3. Avere tre bottoni diversi per creare un articolo da inserire nel catalogo (fisico, virtuale, noleggio). Quando uno di <br> questi viene clicckato, emette un segnale, il quale triggera l'editor giusto per poter creare un nuovo prodotto <br>
+da inserire nel catalogo.
