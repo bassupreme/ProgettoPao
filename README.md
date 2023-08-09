@@ -11,10 +11,10 @@
 5. Risolvere il problema di renderizzare vari itemRenderer utilizzando le classi aggiunte nel commit #4.
 6. Studiare come il search engine di Zanella implementa la visualizzazione dei dati 
 7. Implementare i seguenti metodi:
-    7.1 createItem()
-    7.2 updateItem()
-    7.3 deleteItem()
-    7.4 showItem()
+    1. createItem()
+    2. updateItem()
+    3. deleteItem()
+    4. showItem()
 
 # IDEE
 
