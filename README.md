@@ -10,7 +10,7 @@
 4. ~~tudiare come il search engine di Zanella implementa la persistenza dei dati in JSON.~~
 5. Risolvere il problema di renderizzare vari itemRenderer utilizzando le classi aggiunte nel commit #4.
 6. Studiare come il search engine di Zanella implementa la visualizzazione dei dati 
-7. Implementare metodi:
+7. Implementare i seguenti metodi:
     7.1 createItem()
     7.2 updateItem()
     7.3 deleteItem()
