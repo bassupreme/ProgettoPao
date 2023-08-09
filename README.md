@@ -10,3 +10,8 @@
 4. ~~tudiare come il search engine di Zanella implementa la persistenza dei dati in JSON.~~
 5. Risolvere il problema di renderizzare vari itemRenderer utilizzando le classi aggiunte nel commit #4.
 6. Studiare come il search engine di Zanella implementa la visualizzazione dei dati 
+
+### IDEE
+
+1. Mio ResultWidget: utilizzare una QScrollArea per poter mostrare i risultati di un filtro 
+2. Classe filter: modella un filtro che viene fatto sugli oggetti del contenitore. 
