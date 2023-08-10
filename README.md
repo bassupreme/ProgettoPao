@@ -42,7 +42,7 @@ COSA FA: la funzione serializza i dati in questo modo:
 1. Tramite il puntatore a file, legge il contenuto del file => ritorna un std::vector<AbstractProduct*>. <br>
 2. Inserire nel buffer tutti i prodotti. questo torna poi utile per molti tipi di controlli che possono essere fatti sull'inserimento di un nuovo prodotto. 
 
-#### DESERIALIZZAZIONE (importazione degli oggetti in memoria da uno dei possibili file creati in precedenza).
+#### ESPORTAZIONE DATASET (importazione degli oggetti in memoria da uno dei possibili file creati in precedenza).
 CHI LA COMPIE: bottone => signal => slot (bottone della toolbar presente nella mainwindow) <br>.
 DOVE: la funzione slot nella main window chiamata writeToFile();
 COSA FA: tramite puntatore al file all'interno del widget MainWindow, si hanno a disposizione i metodi di file. 
