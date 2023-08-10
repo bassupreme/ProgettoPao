@@ -20,9 +20,8 @@ public:
     virtual ~IFile() {}; // distruttore virtuale
     IFile(const string p);
     const string& getPath() const { return path; }; // implementazione di default
-		// serializzazione
-    virtual vector<AbstractProduct*> ReadFrom(const IConverter&) = 0;
-    virtual IFile& WriteTo(const vector<AbstractProduct*>&, const IConverter&) = 0;
+    virtual vector<AbstractProduct*> ReadFrom(const IConverter&) = 0; // serializzazione
+    virtual IFile& WriteTo(const vector<AbstractProduct*>&, const IConverter&) = 0; // deserializzazione
 };
 
 #endif

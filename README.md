@@ -1,8 +1,11 @@
-#TODO
+# TODO
 
 ### PRIORITARIO
 ~~1. Provare ad implementare la CustomScrollArea (presente all'interno del file .dia nella cartella doc/).~~
-2. Finire la pianificazione delle AZIONI. 
+2. Finire la pianificazione delle AZIONI.
+    1. Leggere documentazione di QStackedWidget per capire come aggiungere i vari Widget.
+    2. definire i vari widget da poter aggiungere alla stack di widget e dove inserire (in quale parte della mainWindow) la 
+        stack di widget.
 
 ### MODEL
 1. aggiungere ad AbstactProduct.h il campo std::string imagePath
@@ -52,10 +55,14 @@ COSA FA: tramite puntatore al file all'interno del widget MainWindow, si hanno a
 std::vector<AbstractProduct*> x.
 2. Passare x alla funzione virtual IFile& WriteTo. Questa garantisce di scrivere all'interno del file che si trova al percorso <br>
 specificato dall'oggetto puntato dal puntatore AbstractFile* presente nella MainWindow.
+Questa funzione lascia intatto il buffer.
 
 #### CREAZIONE DI UN PRODOTTO DA AGGIUNGERE AL CATALOGO.
+
 #### VISUALIZZAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
+
 #### MODIFICA DI UN PRODOTTO AGGIUNTO AL CATALOGO.
+
 #### ELIMINAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 
 
@@ -65,4 +72,9 @@ specificato dall'oggetto puntato dal puntatore AbstractFile* presente nella Main
 2. Classe filter: modella un filtro che viene fatto sugli oggetti del contenitore. 
 3. Avere tre bottoni diversi per creare un articolo da inserire nel catalogo (fisico, virtuale, noleggio). Quando uno di <br> questi viene clicckato, emette un segnale, il quale triggera l'editor giusto per poter creare un nuovo prodotto <br>
 da inserire nel catalogo.
+4. Utilizzare la classe StackedWidget per poter disporre al posto del resultWidget i vari itemEditor. 
 
+
+### LINK UTILI
+
+https://doc.qt.io/qt-6/qstackedwidget.html#count-prop
