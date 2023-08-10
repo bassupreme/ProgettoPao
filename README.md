@@ -64,6 +64,24 @@ Questa funzione lascia intatto il buffer.
 #### MODIFICA DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 
 #### ELIMINAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
+CHI LA COMPIE: bottone presente all'interno del ListItem => signal clicked => slot <br>.
+
+Problemi:
+1. All'interno della MainWindow: ho solamente i puntatori ai seguenti widget: SearchWidget e FilterWidget. <br>
+2. Lo slot deleteItem() all'interno della MainWindow deve essere connesso ad un segnle affinché possa essere eseguito. <br>
+
+PRIMA SOLUZIONE
+1. ListItem connette il segnale clicked() di QPushButton ad uno slot (privato in quanto serve solamente a questo widget per poter emettere il segnale) che emette a sua volta un segnale del tipo signal( AbstractProduct* ).
+2. All'interno del SearchWidget aggiungere il medesimo slot che fa esattamente la stessa cosa. 
+3. Collegare il segnale emesso dal SearchWidget allo slot deleteItem() tramite il puntatore SearchWidget presente nella <br>
+MainWindow.
+
+SECONDA SOLUZIONE (scartata)
+
+Si basa sull'utilizzo del campo parent del widget ListItem.
+1. Ogni qual volta che inizializzo un ListItem e lo aggiungo alla lista presente all'interno del searchWidget, inizializzo <br>
+il suo campo parent con il puntatore al searchWidget.
+2. Creo un slot privato all'interno del widget chiamato callForDeleteItem() (il nome è solo un esempio). Questo slot emette un segnale del tipo signal( AbstractProduct* ).
 
 
 # IDEE
@@ -73,6 +91,7 @@ Questa funzione lascia intatto il buffer.
 3. Avere tre bottoni diversi per creare un articolo da inserire nel catalogo (fisico, virtuale, noleggio). Quando uno di <br> questi viene clicckato, emette un segnale, il quale triggera l'editor giusto per poter creare un nuovo prodotto <br>
 da inserire nel catalogo.
 4. Utilizzare la classe StackedWidget per poter disporre al posto del resultWidget i vari itemEditor. 
+5. Provare a vedere se eliminando degli elementi programmaticamente dalla QScrollarea questi mantengano una disposizione "senza buchi".  
 
 
 ### LINK UTILI
