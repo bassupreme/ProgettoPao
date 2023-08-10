@@ -21,7 +21,11 @@
 
 #### CREAZIONE FILE DATASET 
 (la soluzione sta semplicemente nel vedere l'implementazione del boy zanella) <br>
-che cosa: la funzione che crea il dataset deve essere messa all'interno della toolbar presente nella mainwindow <br>
+che cosa: bottone => signal => slot (bottone della toolbar presente nella mainwindow) <br>
+dove mettere lo slot: la funzione che crea il dataset deve essere uno slot della mainWindow <br>
+OPZIONALE: questo slot possiamo far si che richiami la funzione di importazione del dataset, cosi' che in automatico la creazione del dataset <br>
+ne comporti subito l'importazione.
+
 #### IMPORTAZIONE DATASET 
 quest'azione corrisponde alla serializzazione degli oggetti (scrittura, da oggetti ad un formato scelto, nel file di dataset creato) <br>
 nella soluzione di zanella questo risulta abbastanza chiaro come farlo. in ogni caso per farlo bisogna usare le classi che ho implementato per serializzare/deserializzare i dati <br>
