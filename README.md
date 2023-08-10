@@ -21,10 +21,14 @@
 
 #### CREAZIONE FILE DATASET 
 (la soluzione sta semplicemente nel vedere l'implementazione del boy zanella) <br>
-che cosa: bottone => signal => slot (bottone della toolbar presente nella mainwindow) <br>
-dove mettere lo slot: la funzione che crea il dataset deve essere uno slot della mainWindow <br>
+CHE COSA: bottone => signal => slot (bottone della toolbar presente nella mainwindow) <br>
+DOVE: la funzione che crea il dataset deve essere uno slot della mainWindow <br>
 OPZIONALE: questo slot possiamo far si che richiami la funzione di importazione del dataset, cosi' che in automatico la creazione del dataset <br>
 ne comporti subito l'importazione.
+COSA FA: la funzione crea un nuovo file all'interno della cartella selezionata. Poi esegue questi passi (in ordine):
+
+1. richiama la funzione di importazione del dataset.
+2. siccome e' nella mainWindow => ha accesso ai suoi campi privati => mediante i puntatori ai widget richiama i metodi per fornire controllo ad essi, e quindi abilitarli.
 
 #### IMPORTAZIONE DATASET 
 quest'azione corrisponde alla serializzazione degli oggetti (scrittura, da oggetti ad un formato scelto, nel file di dataset creato) <br>
