@@ -19,8 +19,10 @@
 
 ### AZIONI
 
-* creazione file dataset.
-* serializzazione degli oggetti (scrittura, da oggetti ad un formato scelto, nel file di dataset creato).
+* creazione file dataset (la soluzione sta semplicemente nel vedere l'implementazione del boy zanella)
+* serializzazione degli oggetti = importazione dataset (scrittura, da oggetti ad un formato scelto, nel file di dataset creato) <br>
+nella soluzione di zanella questo risulta abbastanza chiaro come farlo. in ogni caso per farlo bisogna usare le classi che ho implementato per serializzare/deserializzare i dati
+
 * deserializzazione (importazione degli oggetti in memoria da uno dei possibili file creati in precedenza).
 * creazione di un prodotto da aggiungere al catalogo.
 * visualizzazione di un prodotto aggiunto al catalogo.
