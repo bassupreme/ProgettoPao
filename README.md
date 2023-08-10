@@ -55,3 +55,4 @@ COSA FA: la funzione serializza i dati in questo modo:
 3. Avere tre bottoni diversi per creare un articolo da inserire nel catalogo (fisico, virtuale, noleggio). Quando uno di <br> questi viene clicckato, emette un segnale, il quale triggera l'editor giusto per poter creare un nuovo prodotto <br>
 da inserire nel catalogo.
 4. commento aggiunto da github
+5. ulteriore commento aggiunto da github
