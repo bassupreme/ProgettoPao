@@ -1,4 +1,4 @@
-# TODO
+#TODO
 
 ### PRIORITARIO
 ~~1. Provare ad implementare la CustomScrollArea (presente all'interno del file .dia nella cartella doc/).~~
