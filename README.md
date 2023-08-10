@@ -2,10 +2,10 @@
 
 ### PRIORITARIO
 ~~1. Provare ad implementare la CustomScrollArea (presente all'interno del file .dia nella cartella doc/).~~ <br>
-2. Finire la pianificazione delle AZIONI.
-    2.1 Leggere documentazione di QStackedWidget per capire come aggiungere i vari Widget.
-    2.2 definire i vari widget da poter aggiungere alla stack di widget e dove inserire (in quale parte della mainWindow) la 
-        stack di widget.
+2. Finire la pianificazione delle AZIONI. <br>
+    1. Leggere documentazione di QStackedWidget per capire come aggiungere i vari Widget. <br>
+    2. definire i vari widget da poter aggiungere alla stack di widget e dove inserire (in quale parte della mainWindow) la 
+        stack di widget. <br>
 
 ### MODEL
 1. aggiungere ad AbstactProduct.h il campo std::string imagePath
