@@ -2,6 +2,7 @@
 
 ### PRIORITARIO
 ~~1. Provare ad implementare la CustomScrollArea (presente all'interno del file .dia nella cartella doc/).~~
+2. Finire la pianificazione delle AZIONI. 
 
 ### MODEL
 1. aggiungere ad AbstactProduct.h il campo std::string imagePath
@@ -42,6 +43,16 @@ COSA FA: la funzione serializza i dati in questo modo:
 2. Inserire nel buffer tutti i prodotti. questo torna poi utile per molti tipi di controlli che possono essere fatti sull'inserimento di un nuovo prodotto. 
 
 #### DESERIALIZZAZIONE (importazione degli oggetti in memoria da uno dei possibili file creati in precedenza).
+CHI LA COMPIE: bottone => signal => slot (bottone della toolbar presente nella mainwindow) <br>.
+DOVE: la funzione slot nella main window chiamata writeToFile();
+COSA FA: tramite puntatore al file all'interno del widget MainWindow, si hanno a disposizione i metodi di file. 
+=>   virtual IFile& WriteTo(const vector<AbstractProduct*>&, const IConverter&) = 0;
+
+1. Prendere il contenuto del buffer (tramite il puntatore presente nella MainWindow) e mettere tutti i valori all'interno di un <br>
+std::vector<AbstractProduct*> x.
+2. Passare x alla funzione virtual IFile& WriteTo. Questa garantisce di scrivere all'interno del file che si trova al percorso <br>
+specificato dall'oggetto puntato dal puntatore AbstractFile* presente nella MainWindow.
+
 #### CREAZIONE DI UN PRODOTTO DA AGGIUNGERE AL CATALOGO.
 #### VISUALIZZAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 #### MODIFICA DI UN PRODOTTO AGGIUNTO AL CATALOGO.
