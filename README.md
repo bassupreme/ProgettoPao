@@ -1,4 +1,4 @@
-#TODO
+# TODO
 
 ### PRIORITARIO
 ~~1. Provare ad implementare la CustomScrollArea (presente all'interno del file .dia nella cartella doc/).~~
@@ -21,7 +21,7 @@
 
 #### CREAZIONE FILE DATASET 
 (la soluzione sta semplicemente nel vedere l'implementazione del boy zanella) <br>
-CHE COSA: bottone => signal => slot (bottone della toolbar presente nella mainwindow) <br>
+CHI LA COMPIE: bottone => signal => slot (bottone della toolbar presente nella mainwindow) <br>
 DOVE: la funzione che crea il dataset deve essere uno slot della mainWindow <br>
 OPZIONALE: questo slot possiamo far si che richiami la funzione di importazione del dataset, cosi' che in automatico la creazione del dataset <br>
 ne comporti subito l'importazione.
@@ -31,8 +31,15 @@ COSA FA: la funzione crea un nuovo file all'interno della cartella selezionata. 
 2. siccome e' nella mainWindow => ha accesso ai suoi campi privati => mediante i puntatori ai widget richiama i metodi per fornire controllo ad essi, e quindi abilitarli.
 
 #### IMPORTAZIONE DATASET 
-quest'azione corrisponde alla serializzazione degli oggetti (scrittura, da oggetti ad un formato scelto, nel file di dataset creato) <br>
-nella soluzione di zanella questo risulta abbastanza chiaro come farlo. in ogni caso per farlo bisogna usare le classi che ho implementato per serializzare/deserializzare i dati <br>
+Quest'azione corrisponde alla serializzazione degli oggetti (scrittura, da oggetti ad un formato scelto, nel file di dataset creato) <br>
+Nella soluzione di Zanella questo risulta abbastanza chiaro come farlo. in ogni caso per farlo bisogna usare le classi che ho implementato per serializzare/deserializzare i dati <br>
+
+CHI LA COMPIE: bottone => signal => slot (bottone della toolbar presente nella mainwindow) <br>
+DOVE: la funzione slot nella main window chiamata loadFromDataset();
+COSA FA: la funzione serializza i dati in questo modo:
+
+1. Tramite il puntatore a file, legge il contenuto del file => ritorna un std::vector<AbstractProduct*>. <br>
+2. Inserire nel buffer tutti i prodotti. questo torna poi utile per molti tipi di controlli che possono essere fatti sull'inserimento di un nuovo prodotto. 
 
 #### DESERIALIZZAZIONE (importazione degli oggetti in memoria da uno dei possibili file creati in precedenza).
 #### CREAZIONE DI UN PRODOTTO DA AGGIUNGERE AL CATALOGO.

@@ -7,8 +7,8 @@
 class JsonConverter : public IConverter {
 public:
     JsonConverter(IReader& r); 
-    virtual string fromObject(const AbstractProduct* item); 
-    virtual AbstractProduct* toObject(const string& json);
+    virtual string getJsonFromObject(const AbstractProduct* item); 
+    virtual AbstractProduct* getObjectFromJson(const string& json);
 };
 
 #endif

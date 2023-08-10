@@ -13,13 +13,14 @@ using std::vector;
 // dichiarazioni incomplete
 class IConverter; 
 
-class IFile {
+class IFile { // rinominare ad AbstractFile
 private:
     string path; // ogni file ha un percorso 
 public:
     virtual ~IFile() {}; // distruttore virtuale
     IFile(const string p);
     const string& getPath() const { return path; }; // implementazione di default
+		// serializzazione
     virtual vector<AbstractProduct*> ReadFrom(const IConverter&) = 0;
     virtual IFile& WriteTo(const vector<AbstractProduct*>&, const IConverter&) = 0;
 };
