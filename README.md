@@ -26,12 +26,11 @@ che cosa: la funzione che crea il dataset deve essere messa all'interno della to
 quest'azione corrisponde alla serializzazione degli oggetti (scrittura, da oggetti ad un formato scelto, nel file di dataset creato) <br>
 nella soluzione di zanella questo risulta abbastanza chiaro come farlo. in ogni caso per farlo bisogna usare le classi che ho implementato per serializzare/deserializzare i dati <br>
 
-
-* DESERIALIZZAZIONE (importazione degli oggetti in memoria da uno dei possibili file creati in precedenza).
-* CREAZIONE DI UN PRODOTTO DA AGGIUNGERE AL CATALOGO.
-* VISUALIZZAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
-* MODIFICA DI UN PRODOTTO AGGIUNTO AL CATALOGO.
-* ELIMINAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
+#### DESERIALIZZAZIONE (importazione degli oggetti in memoria da uno dei possibili file creati in precedenza).
+#### CREAZIONE DI UN PRODOTTO DA AGGIUNGERE AL CATALOGO.
+#### VISUALIZZAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
+#### MODIFICA DI UN PRODOTTO AGGIUNTO AL CATALOGO.
+#### ELIMINAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 
 
 # IDEE
