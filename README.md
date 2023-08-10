@@ -56,3 +56,4 @@ COSA FA: la funzione serializza i dati in questo modo:
 da inserire nel catalogo.
 4. commento aggiunto da github
 5. ulteriore commento aggiunto da github
+6. altro commento githubbiano
