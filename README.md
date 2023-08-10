@@ -1,7 +1,7 @@
 # TODO
 
 ### PRIORITARIO
-~~1. Provare ad implementare la CustomScrollArea (presente all'interno del file .dia nella cartella doc/).~~
+~~1. Provare ad implementare la CustomScrollArea (presente all'interno del file .dia nella cartella doc/).~~ <br>
 2. Finire la pianificazione delle AZIONI.
     1. Leggere documentazione di QStackedWidget per capire come aggiungere i vari Widget.
     2. definire i vari widget da poter aggiungere alla stack di widget e dove inserire (in quale parte della mainWindow) la 
