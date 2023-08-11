@@ -49,8 +49,8 @@ Il codice dovrebbe essere una cosa di questo tipo:
 ```cpp
 void loadDataset() {
     IReader reader()
-    IConverter converter();
-    std::vector<AbstractProduct*> aux = ReadFrom(i);
+    IConverter converter(reader);
+    std::vector<AbstractProduct*> aux = fileHandle->ReadFrom(converter);
 
     for(auto it = aux.begin(); it != aux.end(); it++) {
         buffer.insert((*aux).getId(), aux);
