@@ -58,6 +58,23 @@ specificato dall'oggetto puntato dal puntatore AbstractFile* presente nella Main
 Questa funzione lascia intatto il buffer.
 
 #### CREAZIONE DI UN PRODOTTO DA AGGIUNGERE AL CATALOGO.
+CHI LA COMPIE: bottone presente all'interno della toolbar nella mainWindow => signal clicked => slot <br>.
+DOVE: lo slot è all'interno della MainWindow chiamato createItem().
+COSA FA: la funzione slot esegue questo. 
+
+1. Pulisce la stack di widget all'interno della MainWindow per poi far comparire un widget chiamato ItemCreator. 
+nota: siccome si vuole che lo slot createItem() venga eseguito una volta clickato il bottone create() dell'ItemCreator, devo poter avere un puntatore
+ad ItemCreator nella MainWindow, in modo tale da poter collegare un signal emesso dall'ItemCreator allo slot createItem().
+2. Una volta creato l'item all'intern del widget, questo ritorna un AbstractProduct\*.
+3. All'interno del signal createItem() controllo che l'identificatore dell' AbstractProduct\* passato mediante signal() dall'itemCreator non sia già presente all'interno del buffer. il buffer internamente è una map\<unsigned int, AbstractProduct\*\>; => la verifica di ciò può essere fatta in questo modo: 
+<br>
+<br>
+
+if (buffer[AbstractProduct->getId()] == null) then OK.
+else NOT OK.
+
+4. se OK => il prodotto appena creato può essere inserito all'interno del catalogo. In particolare deve essere inserito all'interno del buffer, all'interno del contenitore di AbstractProduct* e deve essere creato un listItem all'interno della scrollArea per poter rappresentare l'oggetto appena creato.
+5. se NOT OK => il prodotto non puà essere inserito. Di conseguenza quello che si può fare è far apparire una finestra di dialogo che dice che il seguente prodotto non può essere inserito.
 
 #### VISUALIZZAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 
