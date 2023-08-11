@@ -63,19 +63,36 @@ DOVE: lo slot è all'interno della MainWindow chiamato createItem().
 COSA FA: la funzione slot esegue questo. 
 
 1. Pulisce la stack di widget all'interno della MainWindow per poi far comparire un widget chiamato ItemCreator. 
-nota: siccome si vuole che lo slot createItem() venga eseguito una volta clickato il bottone create() dell'ItemCreator, devo poter avere un puntatore
-ad ItemCreator nella MainWindow, in modo tale da poter collegare un signal emesso dall'ItemCreator allo slot createItem().
 2. Una volta creato l'item all'intern del widget, questo ritorna un AbstractProduct\*.
-3. All'interno del signal createItem() controllo che l'identificatore dell' AbstractProduct\* passato mediante signal() dall'itemCreator non sia già presente all'interno del buffer. il buffer internamente è una map\<unsigned int, AbstractProduct\*\>; => la verifica di ciò può essere fatta in questo modo: 
+3. All'interno del signal apply() controllo che l'identificatore dell' AbstractProduct\* passato mediante signal() dall'itemCreator non sia già presente all'interno del buffer. Siccome il puntatore al buffer è contenuto nella mainWindow, mi serve che vi sia un puntatore alla mainWindow all'interno dell'ItemEditor. 
+
+il buffer internamente è una map\<unsigned int, AbstractProduct\*\>; => la verifica di ciò può essere fatta in questo modo: 
 <br>
 <br>
 
-if (buffer[AbstractProduct->getId()] == null) then OK.
+if (buffer[(\*AbstractProduct).getId()] == null) then OK.
 else NOT OK.
 
 4. se OK => il prodotto appena creato può essere inserito all'interno del catalogo. In particolare deve essere inserito all'interno del buffer, all'interno del contenitore di AbstractProduct* e deve essere creato un listItem all'interno della scrollArea per poter rappresentare l'oggetto appena creato.
 5. se NOT OK => il prodotto non puà essere inserito. Di conseguenza quello che si può fare è far apparire una finestra di dialogo che dice che il seguente prodotto non può essere inserito.
 
+Il codice è più o meno questo.
+
+void EditWidget::apply() {
+    int identifier = identifier\_input-\>value();
+    QString name = name\_input-\>text();
+    QString description = description\_input-\>toPlainText();
+    QString image\_path = image\_input-\>text();
+    ItemEditor::AbstractItemEditor* editor = editors[stacked\_editor-\>currentIndex()];
+    Item::AbstractProduct\* item = editor-\>create(identifier, name, description, image\_path);
+    Buffer* buffer = mainWindow-\>getBuffer();
+    const std::map\<unsigned int, AbstractProduct\*\>& m = buffer-\>getMap();
+    if (m[item.getId() == null) {
+        (\*buffer).insert(item);
+    }
+    mainWindow-\>reloadData();
+    mainWindow-\>getSearchWidget()-\>search();
+}
 #### VISUALIZZAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 
 #### MODIFICA DI UN PRODOTTO AGGIUNTO AL CATALOGO.
