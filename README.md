@@ -60,16 +60,32 @@ void loadDataset() {
 ```
 
 #### ESPORTAZIONE DATASET (importazione degli oggetti in memoria da uno dei possibili file creati in precedenza).
-CHI LA COMPIE: bottone => signal => slot (bottone della toolbar presente nella mainwindow) <br>.
-DOVE: la funzione slot nella main window chiamata writeToFile();
-COSA FA: tramite puntatore al file all'interno del widget MainWindow, si hanno a disposizione i metodi di file. 
-=>   virtual IFile& WriteTo(const vector<AbstractProduct*>&, const IConverter&) = 0;
+CHI LA COMPIE: bottone => signal => slot (bottone della toolbar presente nella mainwindow) writeToFile(). <br>
+DOVE: la funzione slot nella main window chiamata `writeToFile();` <br>
+COSA FA: tramite puntatore al file `jsonFile JsonFile*`  nella MainWindow, si utilizza il metodo WriteTo(const vector<AbstractProduct*>&, const JsonConverter&); <br>
+All'interno del signal `writeToFile()`: 
 
 1. Prendere il contenuto del buffer (tramite il puntatore presente nella MainWindow) e mettere tutti i valori all'interno di un <br>
-std::vector<AbstractProduct*> x.
-2. Passare x alla funzione virtual IFile& WriteTo. Questa garantisce di scrivere all'interno del file che si trova al percorso <br>
-specificato dall'oggetto puntato dal puntatore AbstractFile* presente nella MainWindow.
-Questa funzione lascia intatto il buffer.
+`std::vector<AbstractProduct*> x`.
+2. Passare `x` alla funzione JsonFile& WriteTo. Questa garantisce di scrivere all'interno del file che si trova al percorso <br>
+specificato dall'oggetto puntato dal puntatore AbstractFile* presente nella MainWindow. <br>
+NOTA BENE: Questa funzione lascia intatto il buffer.
+
+```cpp
+void loadDataset() {
+    std::vector<AbstractProduct*> aux();
+
+    for(std::vector<AbstractProduct*>::iterator it = aux.begin(); 
+        it != aux.end(); 
+        it++) {
+        aux.pushBack(buffer[(*it)->getId()]);
+    }
+    
+    fileHandle->writeToFile();
+    std::cout << "Dataset Salvato" << std::endl;
+    unsavedChanges = false;
+}
+```
 
 #### CREAZIONE DI UN PRODOTTO DA AGGIUNGERE AL CATALOGO.
 CHI LA COMPIE: bottone presente all'interno della toolbar nella mainWindow => signal clicked => slot <br>.
