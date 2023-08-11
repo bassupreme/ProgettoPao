@@ -174,6 +174,42 @@ void MainWindow::updateItem(AbstractProduct\* item) {
 }
 ```
 
+SOLUZIONE 2
+Sappiamo che ogni listItem ha un puntatore al prodotto che vuole rappresentare; <br>
+questo viene propagto al signal editItem(AbstractProduct\*) presente nella mainWindow.
+
+```cpp
+void MainWindow::updateItem(AbstractProduct\* item) {
+    stackedWidget->clearstack(); // copiare questo metodo da Zanella. 
+    IConstVisitor* editorRenderer = new ItemEditorRenderer(item);
+    item.accept(editorRenderer);
+    QWidget* editor = editorRenderer.getRenderedWidget();
+    stackedWidget->addWidget(editor);
+}
+```
+La soluzione in realtà è implicita nella struttura del visitorPattern, in quanto, quando viene invocato il metodo visit, si ha un riferimento
+al prodotto da modificare. <br>
+Il problema è che l'editor deve poter sapere di dover modificare quel prodotto, di conseguenza gli serve un riferimento ad esso. <br>
+Quindi nell'implementazione ognuno dei 3 editor (EditorFisico ...) deve avere un riferimento al prodotto che si vuole modificare.
+
+Una volta modificato questo prodotto, si può propagare il cambiamento alla MainWindow. <br>
+Uno degli editor può essere fatto in questo modo.
+```cpp
+class AbstractEditor : public QWidget {
+private:
+	AbstractProduct* subject;
+public:
+	virtual ~AbstractEditor() {};
+	AbstractEditor(AbstractProduct* item, QWidget* parent = nullptr) : QWidget(parent), subject(item) {} // costruttore di default.
+			
+public slots:
+	// SLOTS
+signals:
+	// SIGNALS
+};
+```
+
+
 #### ELIMINAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 CHI LA COMPIE: bottone presente all'interno del ListItem => signal clicked => slot <br>.
 
