@@ -60,6 +60,7 @@ void loadDataset() {
 ```
 
 #### ESPORTAZIONE DATASET (importazione degli oggetti in memoria da uno dei possibili file creati in precedenza).
+
 CHI LA COMPIE: bottone => signal => slot (bottone della toolbar presente nella mainwindow) writeToFile(). <br>
 DOVE: la funzione slot nella main window chiamata `writeToFile();` <br>
 COSA FA: tramite puntatore al file `jsonFile JsonFile*`  nella MainWindow, si utilizza il metodo WriteTo(const vector<AbstractProduct*>&, const JsonConverter&); <br>
@@ -72,7 +73,7 @@ specificato dall'oggetto puntato dal puntatore AbstractFile* presente nella Main
 NOTA BENE: Questa funzione lascia intatto il buffer.
 
 ```cpp
-void loadDataset() {
+void writeDataset() {
     std::vector<AbstractProduct*> aux();
 
     for(std::vector<AbstractProduct*>::iterator it = aux.begin(); 
