@@ -194,6 +194,7 @@ Quindi nell'implementazione ognuno dei 3 editor (EditorFisico ...) deve avere un
 
 Una volta modificato questo prodotto, si può propagare il cambiamento alla MainWindow. <br>
 Uno degli editor può essere fatto in questo modo.
+
 ```cpp
 class AbstractEditor : public QWidget {
 private:
@@ -208,6 +209,41 @@ signals:
 	// SIGNALS
 };
 ```
+
+SOLUZIONE 3
+
+Per propagare la modifica dell'item si possono adottare diverse strategie. la più semplice nel mio caso potrebbe essere la seguente. 
+Modificare la classe AbstractEditor in questo modo.
+
+```cpp
+class AbstractEditor : public QWidget {
+private:
+	AbstractProduct* subject;
+	MainWindow* mainWindow;
+    QPushButton* applyChangesButton.
+public:
+	virtual ~AbstractEditor() {};
+	AbstractEditor(AbstractProduct* item, QWidget* parent = nullptr) : QWidget(parent), subject(item) {} // costruttore di default.
+    void setMainWindow(MainWindow* w);
+public slots:
+    applyChanges();
+};
+```
+
+Il metodo setMainWindow(MainWindow* w) è definito così:
+
+```cpp
+void setMainWindow(MainWindow* w) {
+    mainWindow = w;    
+};
+```
+
+All'interno del metodo applyChanges posso fare tutto quello che c'è da fare in quanto ho il puntatore alla mainWindow:
+1. Controllare se l'update che si vuole applicare sia fattibile oppure no; in caso lo fosse:
+    1. Richiamare l'update dell'item all'interno dela mainWindow tramite l'api della memoria.
+    2. Richiamare l'update del buffer tramite la sua API.
+    3. fare il refresh degli elementi grafici.
+
 
 
 #### ELIMINAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
