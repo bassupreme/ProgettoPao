@@ -48,8 +48,8 @@ COSA FA: la funzione serializza i dati in questo modo:
 Il codice dovrebbe essere una cosa di questo tipo:
 ```cpp
 void loadDataset() {
-    IReader reader()
-    IConverter converter(reader);
+    JsonReader reader()
+    JsonConverter converter(reader);
     std::vector<AbstractProduct*> aux = fileHandle->ReadFrom(converter);
 
     for(auto it = aux.begin(); it != aux.end(); it++) {
@@ -81,7 +81,10 @@ void loadDataset() {
         aux.pushBack(buffer[(*it)->getId()]);
     }
     
-    fileHandle->writeToFile();
+    JsonReader reader();
+    JsonConverter converter(reader);
+    fileHandle->writeToFile(aux, converter);
+
     std::cout << "Dataset Salvato" << std::endl;
     unsavedChanges = false;
 }
