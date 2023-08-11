@@ -99,13 +99,17 @@ Questo lo si risolve creando la seguente classe, che implementa l'interfaccia IC
 Viene implementata questa in quanto i puntatori agli oggetti sono soplamente utili in lettura. 
 
 ```cpp
+#include <QJsonObject>
 #include "IConstProductVisitor.h"
 
 class JsonVisitor: public IConstProductVisitor {
+private:
+    QJsonObject jsonObject;
 public:
     virtual void visit(const Virtuale*);
     virtual void visit(const Fisico*);
     virtual void visit(const Noleggio*);
+    QJsonObject getJsonObject();
 };
 
 ```
