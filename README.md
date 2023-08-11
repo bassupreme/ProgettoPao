@@ -135,7 +135,42 @@ public:
     virtual void visit(const Noleggio*) = 0;
 };
 ```
+Quindi possiamo creare una classe ItemEditorRender che implementa quest'interfaccia. la classe è fatta in questo modo:
 
+```cpp
+#include "IConstVisitor.h"
+
+class ItemEditorRenderer : public IConstVisitor {
+private:
+	QWidget* widget;
+public:
+	virtual void visit(const Virtuale*);
+	virtual void visit(const Fisico*);
+	virtual void visit(const Noleggio*);	
+	QWidget* getRenderedWidget() const;
+};
+```
+Ognuno di questi metodi ha un implementazione analoga al seguente esempio: 
+
+```cpp
+	virtual void visit(const Fisico*) {
+        // render EditorFisico* di tipo QWidget.
+        new EditorFisico* editor = new EditorFisico(...);
+        widget = editor;
+    }
+```
+di conseguenza, per ognuno dei tipi, si devono implementare degli editor appositi: EditorFisico, EditorVirtuale e EditorNoleggio. <br>
+A questo punto, il signal updateItem() diventa così.
+
+```cpp
+void MainWindow::updateItem(AbstractProduct\* item) {
+    stackedWidget->clearstack(); // copiare questo metodo da Zanella. 
+    IConstVisitor* editorRenderer = new ItemEditorRenderer(item);
+    item.accept(editorRenderer);
+    QWidget* editor = editorRenderer.getRenderedWidget();
+    stackedWidget->addWidget(editor);
+}
+```
 
 #### ELIMINAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 CHI LA COMPIE: bottone presente all'interno del ListItem => signal clicked => slot <br>.
