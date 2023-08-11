@@ -79,18 +79,18 @@ else NOT OK.
 Il codice è più o meno questo.
 ```cpp
 void EditWidget::apply() {
-    int identifier = identifier\_input-\>value();
-    QString name = name\_input-\>text();
-    QString description = description\_input-\>toPlainText();
-    QString image\_path = image\_input-\>text();
-    ItemEditor::AbstractItemEditor* editor = editors[stacked\_editor-\>currentIndex()];
-    Item::AbstractProduct\* item = editor-\>create(identifier, name, description, image\_path);
-    Buffer* buffer = mainWindow-\>getBuffer();
-    const std::map\<unsigned int, AbstractProduct\*\>& m = buffer-\>getMap();
+    int identifier = identifier_input->value();
+    QString name = name_input->text();
+    QString description = description_input->toPlainText();
+    QString image_path = image_input->text();
+    ItemEditor::AbstractItemEditor* editor = editors[stacked_editor->currentIndex()];
+    Item::AbstractProduct* item = editor->create(identifier, name, description, image_path);
+    Buffer* buffer = mainWindow->getBuffer();
+    const std::map<unsigned int, AbstractProduct*>& m = buffer->getMap();
     if (m[item.getId() == null) {
-        (\*buffer).insert(item);
-        mainWindow-\>reloadData();
-        mainWindow-\>getSearchWidget()-\>search();
+        (*buffer).insert(item);
+        mainWindow->reloadData();
+        mainWindow->getSearchWidget()->search();
     } else {
         std::cout << "elemento non inserito in quanto l'identificatore esiste già" << std::endl;
     }
