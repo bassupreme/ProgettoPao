@@ -45,6 +45,20 @@ COSA FA: la funzione serializza i dati in questo modo:
 1. Tramite il puntatore a file, legge il contenuto del file => ritorna un std::vector<AbstractProduct*>. <br>
 2. Inserire nel buffer tutti i prodotti. questo torna poi utile per molti tipi di controlli che possono essere fatti sull'inserimento di un nuovo prodotto. 
 
+Il codice dovrebbe essere una cosa di questo tipo:
+```cpp
+void loadDataset() {
+    IReader reader()
+    IConverter converter();
+    std::vector<AbstractProduct*> aux = ReadFrom(i);
+
+    for(auto it = aux.begin(); it != aux.end(); it++) {
+        buffer.insert((*aux).getId(), aux);
+        contenitore->insert(aux);
+    }
+}
+```
+
 #### ESPORTAZIONE DATASET (importazione degli oggetti in memoria da uno dei possibili file creati in precedenza).
 CHI LA COMPIE: bottone => signal => slot (bottone della toolbar presente nella mainwindow) <br>.
 DOVE: la funzione slot nella main window chiamata writeToFile();
