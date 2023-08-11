@@ -91,6 +91,25 @@ void writeDataset() {
 }
 ```
 
+ATTENZIONE: nella funzione writeToFile viene creato un QJsonArray; questo contiene dei QJsonObject. <br>
+I `QJsonObject` vengono creati diversamente in base al tipo dinamico del puntatore ad `AbstractProduct*`, il che suggerisce che si debba usare il visitor pattern
+per generare diversi QJsonObject. <br>
+
+Questo lo si risolve creando la seguente classe, che implementa l'interfaccia IConstVisitor. <br>
+Viene implementata questa in quanto i puntatori agli oggetti sono soplamente utili in lettura. 
+
+```cpp
+#include "IConstProductVisitor.h"
+
+class JsonVisitor: public IConstProductVisitor {
+public:
+    virtual void visit(const Virtuale*);
+    virtual void visit(const Fisico*);
+    virtual void visit(const Noleggio*);
+};
+
+```
+
 #### CREAZIONE DI UN PRODOTTO DA AGGIUNGERE AL CATALOGO.
 CHI LA COMPIE: bottone presente all'interno della toolbar nella mainWindow => signal clicked => slot <br>.
 DOVE: lo slot è all'interno della MainWindow chiamato createItem().
