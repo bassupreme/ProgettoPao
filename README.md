@@ -89,9 +89,11 @@ void EditWidget::apply() {
     const std::map\<unsigned int, AbstractProduct\*\>& m = buffer-\>getMap();
     if (m[item.getId() == null) {
         (\*buffer).insert(item);
+        mainWindow-\>reloadData();
+        mainWindow-\>getSearchWidget()-\>search();
+    } else {
+        std::cout << "elemento non inserito in quanto l'identificatore esiste già" << std::endl;
     }
-    mainWindow-\>reloadData();
-    mainWindow-\>getSearchWidget()-\>search();
 }
 #### VISUALIZZAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 
