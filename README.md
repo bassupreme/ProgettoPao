@@ -39,7 +39,7 @@ Quest'azione corrisponde alla serializzazione degli oggetti (scrittura, da ogget
 Nella soluzione di Zanella questo risulta abbastanza chiaro come farlo. in ogni caso per farlo bisogna usare le classi che ho implementato per serializzare/deserializzare i dati <br>
 
 CHI LA COMPIE: bottone => signal => slot (bottone della toolbar presente nella mainwindow) <br>
-DOVE: la funzione slot nella main window chiamata loadFromDataset();
+DOVE: la funzione slot nella main window chiamata loadFromDataset(); <br>
 COSA FA: la funzione serializza i dati in questo modo:
 
 1. Tramite il puntatore a file, legge il contenuto del file => ritorna un std::vector<AbstractProduct*>. <br>
