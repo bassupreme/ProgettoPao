@@ -106,7 +106,9 @@ DOVE: lo slot è all'interno della mainWindow.
 PROBLEMI: praticamente sono le stesse problematiche dell'eliminazione di un prodotto in termini di segnali e slot con qualche complicazione aggiuntiva.
 
 1. La modifica dipende dal tipo del prodotto che si vuole modificare.
-2. dopo la modifica del prodotto, bisogna renderla visibile all'interno del resultsWidget.
+2. L'editor di un prodotto deve poter modificare il prodotto "giusto", nel senso che deve modificare il prodotto puntato dal listItem che ha segnalato <br> 
+il click del pulsante edit.
+3. dopo la modifica del prodotto, bisogna renderla visibile all'interno del resultsWidget.
 
 SOLUZIONE 1: Dato che ogni listItem ha un bottone modifica prodotto => signal. <br>
 Questo signal deve essere connesso ad uno slot presente nella mainWindow chiamato updateItem(AbstractProduct\*).
