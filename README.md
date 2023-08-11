@@ -100,12 +100,47 @@ void ItemCreatorWidget::apply() {
 Questo in realtà è abbastanza opzionale in quanto una visualizzazione (lista di ListItem nella scrollbar) la si ha già.  
 
 #### MODIFICA DI UN PRODOTTO AGGIUNTO AL CATALOGO.
+CHI LA COMPIE: bottone presente all'interno del ListItem => signal clicked => slot <br>.
+DOVE: lo slot è all'interno della mainWindow.
+
+PROBLEMI: praticamente sono le stesse problematiche dell'eliminazione di un prodotto in termini di segnali e slot con qualche complicazione aggiuntiva.
+
+1. La modifica dipende dal tipo del prodotto che si vuole modificare.
+2. dopo la modifica del prodotto, bisogna renderla visibile all'interno del resultsWidget.
+
+SOLUZIONE 1: Dato che ogni listItem ha un bottone modifica prodotto => signal. <br>
+Questo signal deve essere connesso ad uno slot presente nella mainWindow chiamato updateItem(AbstractProduct\*).
+Per la propagazione del segnale vedere la soluzione descritta nel problema dell'eliminazione. <br>
+
+Siamo ora all'interno della funzione updateItem():
+
+```cpp
+void MainWindow::updateItem(AbstractProduct\* item) {
+    stackedWidget->clearstack(); // copiare questo metodo da Zanella. 
+}
+```
+Ora, in base al tipo dinamico di item, dobbiamo renderizzare e mettere all'interno sullo stackedWidget un widget diverso per ognuno dei tipi (Fisico, Virtuale e Noleggio). <br>
+Questo lo si può fare tramite il Visitor design pattern (in particolare sfruttiamo la versione IConstVisitor di questo).
+
+```cpp
+class Virtuale;
+class Fisico;
+class Noleggio;
+
+class IConstProductVisitor {
+public:
+    virtual ~IConstProductVisitor() {};
+    virtual void visit(const Virtuale*) = 0;
+    virtual void visit(const Fisico*) = 0;
+    virtual void visit(const Noleggio*) = 0;
+};
+```
 
 
 #### ELIMINAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 CHI LA COMPIE: bottone presente all'interno del ListItem => signal clicked => slot <br>.
 
-Problemi:
+PROBLEMI:
 1. All'interno della MainWindow: ho solamente i puntatori ai seguenti widget: SearchWidget e FilterWidget. <br>
 2. Lo slot deleteItem() all'interno della MainWindow deve essere connesso ad un segnle affinché possa essere eseguito. <br>
 
