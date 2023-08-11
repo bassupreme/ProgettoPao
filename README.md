@@ -77,7 +77,7 @@ else NOT OK.
 5. se NOT OK => il prodotto non puà essere inserito. Di conseguenza quello che si può fare è far apparire una finestra di dialogo che dice che il seguente prodotto non può essere inserito.
 
 Il codice è più o meno questo.
-
+```cpp
 void EditWidget::apply() {
     int identifier = identifier\_input-\>value();
     QString name = name\_input-\>text();
@@ -95,6 +95,7 @@ void EditWidget::apply() {
         std::cout << "elemento non inserito in quanto l'identificatore esiste già" << std::endl;
     }
 }
+```
 #### VISUALIZZAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 
 #### MODIFICA DI UN PRODOTTO AGGIUNTO AL CATALOGO.
