@@ -242,9 +242,20 @@ All'interno del metodo applyChanges posso fare tutto quello che c'è da fare in 
 1. Controllare se l'update che si vuole applicare sia fattibile oppure no; in caso lo fosse:
     1. Richiamare l'update dell'item all'interno dela mainWindow tramite l'api della memoria.
     2. Richiamare l'update del buffer tramite la sua API.
-    3. fare il refresh degli elementi grafici.
+    3. fare il refresh degli elementi grafici (*)
 
+REFRESH ELEMENTI GRAFICI
+All'interno del ResultsWidget, ho un `std::vector<ListItem*>`.  <br>
+Dato che, nella MainWindow vi è un puntatore al fantastico oggetto resultsWidget, quello che posso fare è creare <br>
+un metodo refresh(), da porre all'interno della MainWindow.
 
+Questo metodo scorre il buffer di elementi e, per ogni elemento (\*) aggiorna il contenuto. <br>
+Siccome `std::vector<ListItem*>` può contenere dei ListItem Diversi, allora ogni ListItem deve poter implementare la sua logica di refresh. 
+Questo tuttavia risulta problematico in quanto la rappresentazione di ListItem ha solamente un puntatore ad un QWidget generato al momento del rendering.
+
+SOLUZIONE 3.1
+è veramente necessario fare il refresh di ogni elemento grafico? d'altra parte, se modifico un prodotto, modifico solo quel prodotto. <br>
+è naturale domandarsi come possa modificare solamente l'oggetto grafico che lo rappresenta.
 
 #### ELIMINAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 CHI LA COMPIE: bottone presente all'interno del ListItem => signal clicked => slot <br>.
