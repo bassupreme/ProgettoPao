@@ -78,7 +78,7 @@ else NOT OK.
 
 Il codice è più o meno questo.
 ```cpp
-void EditWidget::apply() {
+void ItemCreatorWidget::apply() {
     int identifier = identifier_input->value();
     QString name = name_input->text();
     QString description = description_input->toPlainText();
@@ -97,8 +97,10 @@ void EditWidget::apply() {
 }
 ```
 #### VISUALIZZAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
+Questo in realtà è abbastanza opzionale in quanto una visualizzazione (lista di ListItem nella scrollbar) la si ha già.  
 
 #### MODIFICA DI UN PRODOTTO AGGIUNTO AL CATALOGO.
+
 
 #### ELIMINAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 CHI LA COMPIE: bottone presente all'interno del ListItem => signal clicked => slot <br>.
