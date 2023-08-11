@@ -153,11 +153,11 @@ public:
 Ognuno di questi metodi ha un implementazione analoga al seguente esempio: 
 
 ```cpp
-	virtual void visit(const Fisico*) {
-        // render EditorFisico* di tipo QWidget.
-        new EditorFisico* editor = new EditorFisico(...);
-        widget = editor;
-    }
+virtual void visit(const Fisico*) {
+    // render EditorFisico* di tipo QWidget.
+    new EditorFisico* editor = new EditorFisico(...);
+    widget = editor;
+}
 ```
 di conseguenza, per ognuno dei tipi, si devono implementare degli editor appositi: EditorFisico, EditorVirtuale e EditorNoleggio. <br>
 A questo punto, il signal updateItem() diventa così.
