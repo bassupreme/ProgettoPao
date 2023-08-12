@@ -410,7 +410,7 @@ il suo campo parent con il puntatore al searchWidget.
 3. Avere tre bottoni diversi per creare un articolo da inserire nel catalogo (fisico, virtuale, noleggio). Quando uno di <br> questi viene clicckato, emette un segnale, il quale triggera l'editor giusto per poter creare un nuovo prodotto <br>
 da inserire nel catalogo.
 4. ~~Utilizzare la classe StackedWidget per poter disporre al posto del resultWidget i vari itemEditor.~~
-5. Provare a vedere se eliminando degli elementi programmaticamente dalla QScrollarea questi mantengano una disposizione "senza buchi".  
+5. ~~Provare a vedere se eliminando degli elementi programmaticamente dalla QScrollarea questi mantengano una disposizione "senza buchi".~~
 
 
 NOTA: gli elementi barrati sono  idee che si possono implementare.
