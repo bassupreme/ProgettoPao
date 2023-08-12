@@ -121,7 +121,7 @@ DOVE: lo slot è all'interno della MainWindow chiamato `createItem()`. <br>
 COSA FA: la funzione slot esegue questo. <br>
 
 1. Pulisce la stack di widget all'interno della MainWindow tramite il puntatore `QStackedWidget* stackedWidget` per poi far comparire un widget chiamato `ItemCreator`. <br>
-2. All'interno del signal apply(), triggerato dal `QPushButton* create` all'interno dell `ItemCreator` controllo che l'identificatore dell' `AbstractProduct*` non sia già presente all'interno del buffer. Siccome il puntatore al buffer è contenuto nella mainWindow, mi serve che vi sia un puntatore alla mainWindow all'interno dell'ItemEditor. 
+2. All'interno dello `SLOT(apply())`, triggerato dal `QPushButton* buttonCreate` all'interno dell' `ItemCreator` controllo che l'identificatore dell' `AbstractProduct*` non sia già presente all'interno del buffer. Siccome il puntatore al buffer è contenuto nella mainWindow, `ItemCreator` deve avere un puntatore alla mainWindow. 
 
 Il buffer internamente è una map\<unsigned int, AbstractProduct\*\>; => la verifica di ciò può essere fatta in questo modo: 
 
@@ -137,7 +137,7 @@ void ItemCreatorWidget::apply() {
     int identifier = identifier_input->value();
     QString name = name_input->text();
     QString image_path = image_input->text();
-    ItemEditor::AbstractItemEditor* editor = editors[stacked_editor->currentIndex()]; // essenziale per fare gli editor
+    AbstractEditor* editor = editors[stacked_editor->currentIndex()]; // essenziale per fare gli editor
     Item::AbstractProduct* item = editor->create(identifier, name, description, image_path);
     Buffer* buffer = mainWindow->getBuffer();
     const std::map<unsigned int, AbstractProduct*>& m = buffer->getMap();
@@ -150,6 +150,8 @@ void ItemCreatorWidget::apply() {
     }
 }
 ```
+NOTA BENE: secondo la struttura riadattata di questo signal, nella classe `AbstractEditor` deve esserci un metodo create, in quanto ogni editor deve poter creare un AbstractProduct* avente tipo dinamico diverso. 
+
 #### VISUALIZZAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 Questo in realtà è abbastanza opzionale in quanto una visualizzazione (lista di ListItem nella scrollbar) la si ha già.  
 
