@@ -356,7 +356,33 @@ PRIMA SOLUZIONE
 2. All'interno del SearchWidget aggiungere il medesimo slot privato che fa esattamente la stessa cosa. 
 3. Collegare il segnale emesso dal SearchWidget allo slot deleteItem() tramite il puntatore SearchWidget presente nella MainWindow. <br>
 
-Il segnale che viene emesso sia da listItem che dallo slot può chiamarsi `itemDeleted(AbstractProduct*)`.
+Il segnale che viene emesso sia da listItem che dallo slot può chiamarsi `itemDeleted(AbstractProduct*)`. <br>
+Questo slot privato deve essere connesso al tasto eslimina durante la costruzione di `ListItem`. <br>
+Essa avviene circa in questo modo:
+
+```cpp
+ListItem::ListItem(QWidget* parent) : QWidget(parent) {
+    //... inizializzazine oggetti grafici 
+
+    connect(editButton, SIGNAL(clicked()), this, SLOT(slotItemSelected()));         
+    connect(deleteButton, SIGNAL(clicked()), this, SLOT(slotItemDeleted()));         
+}
+```
+Per quanto riguarda la connessione con il resultWidget, questa viene fatta nel momento della costruzione.
+
+```cpp
+ResultsWidget::ResultsWidget(QWidget* parent) : QWidget(parent) {
+    
+    // dal puntatore alla mainwindow prendiamo il contenitore, nel quale dobbiamo inserire un metodo getData() che ritorna un std::vector<AbstractProduct*>
+    std::vector<AbstractProduct*> vettore = (mainWindow->getContenitore())->getData();
+
+    // inizializzazione std::vector<ListItem*> 
+    for(auto it = vettore.begin(); it != vettore.end(); it++) {
+        ListItem* listItem = new ListItem(this, *it);        
+        connect(listItem, SIGNAL(signalDeltedItem(AbstractProduct*), mainWindow, SLOT(deleteItem(AbstractProduct*)));
+    }
+}
+```
 
 SECONDA SOLUZIONE (scartata)
 
