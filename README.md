@@ -362,13 +362,21 @@ Essa avviene circa in questo modo:
 
 ```cpp
 ListItem::ListItem(QWidget* parent) : QWidget(parent) {
-    //... inizializzazine oggetti grafici 
+    //... inizializzazine oggetti grafici per rappresentare un AbstractProduct*
 
     connect(editButton, SIGNAL(clicked()), this, SLOT(slotItemSelected()));         
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(slotItemDeleted()));         
 }
 ```
-Per quanto riguarda la connessione con il resultWidget, questa viene fatta nel momento della costruzione.
+Lo slot `slotItemDeleted()` all'interno di `ListItem` implementa la seguente logica:
+
+```cpp
+ListItem::slotItemSelected() {
+    emit(item);
+}
+
+```
+Per quanto riguarda la connessione con il resultWidget, questa viene fatta nel momento della costruzione
 
 ```cpp
 ResultsWidget::ResultsWidget(QWidget* parent) : QWidget(parent) {
@@ -383,6 +391,8 @@ ResultsWidget::ResultsWidget(QWidget* parent) : QWidget(parent) {
     }
 }
 ```
+
+Questa logica si può riutilizzare per la propagazione di `AbstractProduct*` durante la'operazione di modifica, la quale scatta tramite il `SIGNAL(clicked())` di editButton all'interno di `ListItem`.
 
 SECONDA SOLUZIONE (scartata)
 
