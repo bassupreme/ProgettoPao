@@ -211,7 +211,7 @@ void MainWindow::updateItem(const AbstractProduct* item) {
     stackedWidget->clearstack(); // copiare questo metodo da Zanella. 
 }
 ```
-In base al tipo dinamico di item, dobbiamo renderizzare e mettere all'interno dello stackedWidget un widget diverso per ognuno dei tipi (Fisico, Virtuale e Noleggio). <br>
+In base al tipo dinamico di item, si puo' renderizzare e mettere all'interno dello stackedWidget uno degli editor per ognuno dei tipi (EditorFisico, EditorVirtuale e EditorNoleggio). <br>
 Questo lo si può fare tramite il Visitor design pattern (in particolare sfruttiamo la versione IConstVisitor di questo).
 
 ```cpp
@@ -266,35 +266,27 @@ void MainWindow::updateItem(AbstractProduct* item) {
 
 SOLUZIONE 2
 Sappiamo che ogni listItem ha un puntatore al prodotto che vuole rappresentare; <br>
-questo viene propagto al signal editItem(AbstractProduct\*) presente nella mainWindow.
-
-```cpp
-void MainWindow::updateItem(AbstractProduct\* item) {
-    stackedWidget->clearstack(); // copiare questo metodo da Zanella. 
-    IConstVisitor* editorRenderer = new ItemEditorRenderer(item);
-    item.accept(editorRenderer);
-    QWidget* editor = editorRenderer.getRenderedWidget();
-    stackedWidget->addWidget(editor);
-}
-```
-La soluzione in realtà è implicita nella struttura del visitorPattern, in quanto, quando viene invocato il metodo visit, si ha un riferimento
+Questo viene propagto al signal editItem(AbstractProduct\*) presente nella mainWindow.
+La soluzione in realtà è nella struttura dell'AbstractEditor, in quanto, quando viene invocato il metodo visit, si crea un editor ad hoc passandogli il puntatore 
 al prodotto da modificare. <br>
-Il problema è che l'editor deve poter sapere di dover modificare quel prodotto, di conseguenza gli serve un riferimento ad esso. <br>
-Quindi nell'implementazione ognuno dei 3 editor (EditorFisico ...) deve avere un riferimento al prodotto che si vuole modificare.
-
 Una volta modificato questo prodotto, si può propagare il cambiamento alla MainWindow. <br>
-Uno degli editor può essere fatto in questo modo.
+La struttura della classe Editor è la seguente:
 
 ```cpp
 class AbstractEditor : public QWidget {
 private:
 	AbstractProduct* subject;
+    QLineEdit* boxId;
+    QSpinBox* boxPrezzo;
+    QLineEdit* boxNamel;
+    QLineEdit* boxImagePath;
 public:
 	virtual ~AbstractEditor() {};
 	AbstractEditor(AbstractProduct* item, QWidget* parent = nullptr) : QWidget(parent), subject(item) {} // costruttore di default.
 			
 public slots:
-	// SLOTS
+    void update(); // da collegare al bottone apply changes 
+    void create(); // da collegare al bottone apply
 signals:
 	// SIGNALS
 };
@@ -309,14 +301,19 @@ Modificare la classe AbstractEditor in questo modo.
 class AbstractEditor : public QWidget {
 private:
 	AbstractProduct* subject;
-	MainWindow* mainWindow;
-    QPushButton* applyChangesButton.
+	MainWindow* mainWindow; // AGGIUNTO
+    QLineEdit* boxId;
+    QSpinBox* boxPrezzo;
+    QLineEdit* boxNamel;
+    QLineEdit* boxImagePath;   
+    QPushButton* applyChangesButton; // AGGIUNTO
 public:
 	virtual ~AbstractEditor() {};
 	AbstractEditor(AbstractProduct* item, QWidget* parent = nullptr) : QWidget(parent), subject(item) {} // costruttore di default.
-    void setMainWindow(MainWindow* w);
+    void setMainWindow(MainWindow* w); // AGGIUNTO
 public slots:
-    applyChanges();
+    void update();  
+    void create(); 
 };
 ```
 
@@ -328,7 +325,7 @@ void setMainWindow(MainWindow* w) {
 };
 ```
 
-All'interno del metodo applyChanges posso fare tutto quello che c'è da fare in quanto ho il puntatore alla mainWindow:
+All'interno del metodo update posso fare tutto quello che c'è da fare in quanto ho il puntatore alla mainWindow:
 1. Controllare se l'update che si vuole applicare sia fattibile oppure no; in caso lo fosse:
     1. Richiamare l'update dell'item all'interno dela mainWindow tramite l'api della memoria.
     2. Richiamare l'update del buffer tramite la sua API.
