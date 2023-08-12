@@ -190,9 +190,9 @@ AbstractProduct* EditorNoleggio::create() {
 Questo in realtà è abbastanza opzionale in quanto una visualizzazione (lista di ListItem nella scrollbar) la si ha già.  
 
 #### MODIFICA DI UN PRODOTTO AGGIUNTO AL CATALOGO.
-CHI LA COMPIE: bottone presente all'interno del ListItem => signal clicked => slot <br>.
-DOVE: lo slot è all'interno della mainWindow.
 
+CHI LA COMPIE: bottone presente all'interno del ListItem => signal clicked => slot. <br>
+DOVE: lo slot è all'interno della mainWindow. <br>
 PROBLEMI: praticamente sono le stesse problematiche dell'eliminazione di un prodotto in termini di segnali e slot con qualche complicazione aggiuntiva.
 
 1. La modifica dipende dal tipo del prodotto che si vuole modificare.
