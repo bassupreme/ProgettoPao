@@ -345,17 +345,18 @@ SOLUZIONE 3.1
 è naturale domandarsi come possa modificare solamente l'oggetto grafico che lo rappresenta.
 
 #### ELIMINAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
-CHI LA COMPIE: bottone presente all'interno del ListItem => signal clicked => slot <br>.
+CHI LA COMPIE: bottone presente all'interno del ListItem => signal clicked => slot. <br>
 
 PROBLEMI:
 1. All'interno della MainWindow: ho solamente i puntatori ai seguenti widget: SearchWidget e FilterWidget. <br>
-2. Lo slot deleteItem() all'interno della MainWindow deve essere connesso ad un segnle affinché possa essere eseguito. <br>
+2. Lo slot `deleteItem(AbstractProduct*)` all'interno della MainWindow deve essere connesso ad un segnle affinché possa essere eseguito. <br>
 
 PRIMA SOLUZIONE
-1. ListItem connette il segnale clicked() di QPushButton ad uno slot (privato in quanto serve solamente a questo widget per poter emettere il segnale) che emette a sua volta un segnale del tipo signal( AbstractProduct* ).
-2. All'interno del SearchWidget aggiungere il medesimo slot che fa esattamente la stessa cosa. 
-3. Collegare il segnale emesso dal SearchWidget allo slot deleteItem() tramite il puntatore SearchWidget presente nella <br>
-MainWindow.
+1. ListItem connette il segnale clicked() di QPushButton ad uno slot (privato in quanto serve solamente a questo widget per poter emettere il segnale) che emette un segnale del tipo `signal(AbstractProduct*)`.
+2. All'interno del SearchWidget aggiungere il medesimo slot privato che fa esattamente la stessa cosa. 
+3. Collegare il segnale emesso dal SearchWidget allo slot deleteItem() tramite il puntatore SearchWidget presente nella MainWindow. <br>
+
+Il segnale che viene emesso sia da listItem che dallo slot può chiamarsi `itemDeleted(AbstractProduct*)`.
 
 SECONDA SOLUZIONE (scartata)
 
