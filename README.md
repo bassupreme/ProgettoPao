@@ -120,14 +120,12 @@ CHI LA COMPIE: bottone presente all'interno della toolbar nella mainWindow => si
 DOVE: lo slot è all'interno della MainWindow chiamato `createItem()`. <br>
 COSA FA: la funzione slot esegue questo. <br>
 
-1. Pulisce la stack di widget all'interno della MainWindow tramite il puntatore `QStackedWidget* stackedWidget` per poi far comparire un widget chiamato `ItemCreator`. 
-(fare l'uml del widget ItemCreator basandosi su quello che fa Zanella). <br>
+1. Pulisce la stack di widget all'interno della MainWindow tramite il puntatore `QStackedWidget* stackedWidget` per poi far comparire un widget chiamato `ItemCreator`. <br>
 2. All'interno del signal apply(), triggerato dal `QPushButton* create` all'interno dell `ItemCreator` controllo che l'identificatore dell' `AbstractProduct*` non sia già presente all'interno del buffer. Siccome il puntatore al buffer è contenuto nella mainWindow, mi serve che vi sia un puntatore alla mainWindow all'interno dell'ItemEditor. 
 
 Il buffer internamente è una map\<unsigned int, AbstractProduct\*\>; => la verifica di ciò può essere fatta in questo modo: 
 
-if (buffer[(\*AbstractProduct).getId()] == null) then OK.
-else NOT OK.
+`if (buffer[(\*AbstractProduct).getId()] == null) then OK, else NOT OK.`
 
 4. se OK => il prodotto appena creato può essere inserito all'interno del catalogo. In particolare deve essere inserito all'interno del buffer, all'interno del contenitore di AbstractProduct* e deve essere creato un listItem all'interno della scrollArea per poter rappresentare l'oggetto appena creato.
 5. se NOT OK => il prodotto non puà essere inserito. Di conseguenza quello che si può fare è far apparire una finestra di dialogo che dice che il seguente prodotto non può essere inserito.
