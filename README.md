@@ -121,6 +121,24 @@ DOVE: lo slot è all'interno della MainWindow chiamato `createItem()`. <br>
 COSA FA: la funzione slot esegue questo. <br>
 
 1. Pulisce la stack di widget all'interno della MainWindow tramite il puntatore `QStackedWidget* stackedWidget` per poi far comparire un widget chiamato `ItemCreator`. <br>
+La soluzione di Zanella riadattata al mio modello della GUI è il seguente:
+
+```cpp
+void MainWindow::createItem() {
+    clearStack(); // da implementare
+    QScrollArea* scrollArea = new QScrollArea(); 
+    scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    scroll_area->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    scroll_area->setWidgetResizable(true);
+    ItemCreator* createWidget = new ItemCreator(nullptr, this);
+    scroll_area->setWidget(createWidget);
+    stacked_widget->addWidget(scrollArea);
+    stacked_widget->setCurrentIndex(1);
+    has_unsaved_changes = true;
+    showStatus("Creating a new item.");
+}
+```
+
 2. All'interno dello `SLOT(apply())`, triggerato dal `QPushButton* buttonCreate` all'interno dell' `ItemCreator` controllo che l'identificatore dell' `AbstractProduct*` non sia già presente all'interno del buffer. Siccome il puntatore al buffer è contenuto nella mainWindow, `ItemCreator` deve avere un puntatore alla mainWindow. 
 
 Il buffer internamente è una map\<unsigned int, AbstractProduct\*\>; => la verifica di ciò può essere fatta in questo modo: 
@@ -133,16 +151,16 @@ Il buffer internamente è una map\<unsigned int, AbstractProduct\*\>; => la veri
 Il codice è più o meno questo.
 
 ```cpp
-void ItemCreatorWidget::apply() {
-    int identifier = identifier_input->value();
-    QString name = name_input->text();
-    QString image_path = image_input->text();
-    AbstractEditor* editor = editors[stacked_editor->currentIndex()]; // essenziale per fare gli editor
-    Item::AbstractProduct* item = editor->create(identifier, name, description, image_path);
+void ItemCreator::apply() {
+    Item::AbstractProduct* item = editor->create();
+    // setup oggetti che servono per i controlli.
     Buffer* buffer = mainWindow->getBuffer();
     const std::map<unsigned int, AbstractProduct*>& m = buffer->getMap();
+
     if (m[item.getId()) {
         std::cout << "elemento non inserito in quanto l'identificatore esiste già" << std::endl;
+        delete item; // questo in quanto, nel caso sia gia' presente un item avente lo stesso id
+                     // non serve piu' questo item in memoria.
     } else {
         (*buffer).insert(item);
         mainWindow->reloadData();
@@ -150,7 +168,23 @@ void ItemCreatorWidget::apply() {
     }
 }
 ```
-NOTA BENE: secondo la struttura riadattata di questo signal, nella classe `AbstractEditor` deve esserci un metodo create, in quanto ogni editor deve poter creare un AbstractProduct* avente tipo dinamico diverso. 
+NOTA BENE: secondo la struttura riadattata di questo signal, nella classe `AbstractEditor` deve esserci un metodo create, in quanto ogni editor deve poter creare un AbstractProduct* avente tipo dinamico diverso. <br>
+Il metodo create di un determinato prodotto implementa la logica seguente; prendiamo, per esempio la creazione di un prodotto fisico a noleggio: <br>
+
+```cpp
+AbstractProduct* EditorNoleggio::create() {
+    // prendere i valori dagli elementi grafici
+    int identifier = boxId->value();
+    QString name = boxName->text();
+    QString prezzo = boxPrezzo->value();
+    QString imagePath = boxImagePath->text();
+    QString noleggiatore = boxNoleggiatore->text();
+    QString noleggiante = boxNoleggiante->text();
+
+    // passare alla creazione di AbstractProduct*
+    Item::AbstractProduct* item = new Noleggio(identifier, name, description, imagePath, noleggiatore, noleggiante);
+}
+```
 
 #### VISUALIZZAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 Questo in realtà è abbastanza opzionale in quanto una visualizzazione (lista di ListItem nella scrollbar) la si ha già.  
