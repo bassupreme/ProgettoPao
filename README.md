@@ -201,17 +201,17 @@ il click del pulsante edit.
 3. dopo la modifica del prodotto, bisogna renderla visibile all'interno del resultsWidget.
 
 SOLUZIONE 1: Dato che ogni listItem ha un bottone modifica prodotto => signal. <br>
-Questo signal deve essere connesso ad uno slot presente nella mainWindow chiamato updateItem(AbstractProduct\*).
+Questo signal deve essere connesso ad uno slot presente nella mainWindow chiamato `updateItem(AbstractProduct*)`.
 Per la propagazione del segnale vedere la soluzione descritta nel problema dell'eliminazione. <br>
 
-Siamo ora all'interno della funzione updateItem():
+Siamo ora all'interno della funzione `updateItem(AbstractProduct*)`:
 
 ```cpp
-void MainWindow::updateItem(AbstractProduct\* item) {
+void MainWindow::updateItem(const AbstractProduct* item) {
     stackedWidget->clearstack(); // copiare questo metodo da Zanella. 
 }
 ```
-Ora, in base al tipo dinamico di item, dobbiamo renderizzare e mettere all'interno sullo stackedWidget un widget diverso per ognuno dei tipi (Fisico, Virtuale e Noleggio). <br>
+In base al tipo dinamico di item, dobbiamo renderizzare e mettere all'interno dello stackedWidget un widget diverso per ognuno dei tipi (Fisico, Virtuale e Noleggio). <br>
 Questo lo si può fare tramite il Visitor design pattern (in particolare sfruttiamo la versione IConstVisitor di questo).
 
 ```cpp
@@ -242,20 +242,20 @@ public:
 	QWidget* getRenderedWidget() const;
 };
 ```
-Ognuno di questi metodi ha un implementazione analoga al seguente esempio: 
+Ognuno di questi metodi ha un implementazione diversa, analoga al seguente esempio: 
 
 ```cpp
-virtual void visit(const Fisico*) {
+virtual void visit(const Fisico* element) {
     // render EditorFisico* di tipo QWidget.
-    new EditorFisico* editor = new EditorFisico(...);
+    EditorFisico* editor = new EditorFisico(nullptr, element);
     widget = editor;
 }
 ```
-di conseguenza, per ognuno dei tipi, si devono implementare degli editor appositi: EditorFisico, EditorVirtuale e EditorNoleggio. <br>
+Di conseguenza, per ognuno dei tipi, si devono implementare degli editor appositi: EditorFisico, EditorVirtuale e EditorNoleggio. <br>
 A questo punto, il signal updateItem() diventa così.
 
 ```cpp
-void MainWindow::updateItem(AbstractProduct\* item) {
+void MainWindow::updateItem(AbstractProduct* item) {
     stackedWidget->clearstack(); // copiare questo metodo da Zanella. 
     IConstVisitor* editorRenderer = new ItemEditorRenderer(item);
     item.accept(editorRenderer);
