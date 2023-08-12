@@ -194,7 +194,7 @@ Questo in realtà è abbastanza opzionale in quanto una visualizzazione (lista d
 CHI LA COMPIE: bottone presente all'interno del ListItem => signal clicked => slot. <br>
 DOVE: lo slot è all'interno della mainWindow. <br>
 PROBLEMI: praticamente sono le stesse problematiche dell'eliminazione di un prodotto in termini di segnali e slot con qualche complicazione aggiuntiva. <br>
-Per vedere la propagazione di `AbstractProduct*` alla mainwindow, andare alla sezione di [eliminazione](#ELIMINAZIONE-DI-UN-PRODOTTO-AGGIUNTO-AL-CATALOGO)
+Per vedere la propagazione di `AbstractProduct*` alla mainwindow, andare alla sezione di [eliminazione](#eliminazione-di-un-prodotto-aggiunto-al-catalogo)
 
 1. La modifica dipende dal tipo del prodotto che si vuole modificare.
 2. L'editor di un prodotto deve poter modificare il prodotto "giusto", nel senso che deve modificare il prodotto puntato dal listItem che ha segnalato <br> 
