@@ -163,8 +163,8 @@ void ItemCreator::apply() {
                      // non serve piu' questo item in memoria.
     } else {
         (*buffer).insert(item);
-        mainWindow->reloadData();
-        mainWindow->getSearchWidget()->search();
+        mainWindow->reloadData(); // dubbio 
+        mainWindow->getSearchWidget()->search(); // dubbio
     }
 }
 ```
