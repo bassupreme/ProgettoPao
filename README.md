@@ -426,16 +426,21 @@ COMPORTAMENTE DI QUESTO WIDGET:
 #include "SubstringMatcher.h"
 #include "PriceMatcher.h"
 void FilterWidget::slotEmitSignalFilter() {
-    Filter* aux = new Filter();
+    if (currentFilter != nullptr) { // vuol dire che è già stato applicato un filtro precedentemente 
+        delete currentFilter; // richiama il distruttore di Filter.
+    }
+    Filter* aux = new Filter(); 
 
     // setup dei vari matcher a seconda di quali checkbox spuntate
     if (corresponding_matcher_box->spuntata()) {
-        CorrespondingMatcher* m = new matcher;
+        CorrespondingMatcher* m = new matcher();
         aux->addMatcher(m);
     }
     // ... e via dicendo ...
 
-    emit signalFilter(aux);
+    // settare il currentFilter come aux
+    currentFilter = aux;
+    emit signalFilter(aux); 
 }
 
 ```
@@ -458,9 +463,42 @@ void MainWindow::search(Filter* filter) {
 }
 
 ```
+COSA SUCCEDE SE 
+1. Si vuole applicare un nuovo filtro.
+2. Si vuol resettare il filterWidget con nessun filtro
+
+In tutti e due i casi si deve eliminare dalla memoria dinamica il contenuto puntato dal puntatore `Filter* currentFilter`. <br>
+Per fare questo, tuttava, non basta il distruttore standard di Filter. <br>
+Questo, in quanto, gli ogggeti contenuti in `std::vector<IMatcher*>` sono puntatori che puntano ad aree di memoria dinamica. <br>
+Di conseguenza, invocare il costruttore standard di `Filter` eliminerebbe solamente la memoria di `std::vector<IMatcher*>`, ma non il contenuto puntato dagli oggetti del vettore. <br>
+Il distruttore di `Filter` deve quindi avere la seguente implementazione:
+
+```cpp
+class FilterWidget {
+private:
+// ...
+static void destroy() {
+    for (auto it = matchers.begin(); it != matchers.end(); it++) {
+        delete matchers[it];
+    }
+}
+
+public:
+FilterWidget::~FilterWidget() {
+    destroy();    
+}
+
+
+```
 
 MODELLAZIONE DELLA CLASSE FILTRO
 Tutto questo è disponibile nell'uml del progetto.
+
+#### RENDERIZZARE GLI ELEMENTI GRAFICI
+Le azioni che vanno ad usare il rendere degli elementi grafici sono:
+1. [importazione dataset](#importazione-dataset)
+2. [ricerda di un prodotto](#ricerca-di-un-prodotto-aggiunto-al-catalogo-mediante-filter-widget)
+
 
 # IDEE
 
