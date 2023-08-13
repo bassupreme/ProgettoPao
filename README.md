@@ -412,9 +412,12 @@ COMPORTAMENTE DI QUESTO WIDGET:
 1. prima di caricare un dataset, questo widget non ha controllo, quindi bisogna fare un metodo che si occupi di disabilitare tutti i widget all'interno di esso.
 2. dopo l'importazione di un dataset, questo widget ha controllo, quindi bisogna fare un metodo che si occupi di abilitare tutti i widget all'interno di esso. <br>
     Sarà la mainwindow il widget responsabile di abilitare/disabilitare questo widget a seconda dell'avvenuto caricamento di un dataset. 
+3. Setup:
+    1. scorrere la memoria e trovare il prezzo minimo e massimo dei prodotti all'interno del dataset.
+    2. inizializzare le spinbox del prezzo con questi due valori.
+4. Una volta ottenuto controllo, il widget accetta valori all'interno del suo valore
 
-
-
+MODELLAZIONE DELLA CLASSE FILTRO
 
 # IDEE
 
