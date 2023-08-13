@@ -498,6 +498,9 @@ Tutto questo è disponibile nell'uml del progetto.
 Le azioni che vanno ad usare il rendere degli elementi grafici sono:
 1. [importazione dataset](#importazione-dataset)
 2. [ricerda di un prodotto](#ricerca-di-un-prodotto-aggiunto-al-catalogo-mediante-filter-widget)
+3. [modifica di un prodotto](#modifica-di-un-prodotto-aggiunto-al-catalogo)
+
+Nel resultWidget è disponibile un metodo `renderResults(std::vector<AbstractProcut*>)`. <br>
 
 
 # IDEE
