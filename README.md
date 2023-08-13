@@ -402,6 +402,19 @@ Si basa sull'utilizzo del campo parent del widget ListItem.
 il suo campo parent con il puntatore al searchWidget.
 2. Creo un slot privato all'interno del widget chiamato callForDeleteItem() (il nome è solo un esempio). Questo slot emette un segnale del tipo signal( AbstractProduct* ).
 
+#### RICERCA DI UN PRODOTTO AGGIUNTO AL CATALOGO MEDIANTE FILTER WIDGET
+
+1. bisogna progettare questo widget. L'idea è quella di avere un form layout che cntiene tutti gli elementi grafici per poter applicare il filtro.
+quindi bisogna andare a guardare la ducoumentazione di QFormLayout.
+
+COMPORTAMENTE DI QUESTO WIDGET:
+
+1. prima di caricare un dataset, questo widget non ha controllo, quindi bisogna fare un metodo che si occupi di disabilitare tutti i widget all'interno di esso.
+2. dopo l'importazione di un dataset, questo widget ha controllo, quindi bisogna fare un metodo che si occupi di abilitare tutti i widget all'interno di esso. <br>
+    Sarà la mainwindow il widget responsabile di abilitare/disabilitare questo widget a seconda dell'avvenuto caricamento di un dataset. 
+
+
+
 
 # IDEE
 
