@@ -407,17 +407,60 @@ il suo campo parent con il puntatore al searchWidget.
 1. bisogna progettare questo widget. L'idea è quella di avere un form layout che cntiene tutti gli elementi grafici per poter applicare il filtro.
 quindi bisogna andare a guardare la ducoumentazione di QFormLayout.
 
+
+SETUP INIZIALE 
+All'interno del costruttore della main window, viene invocato il metodo connect che connette, tramite il puntatore al filterwidget, il segnale `signalFilter(Filter*)` allo slot `search(Filter*)`.
+
 COMPORTAMENTE DI QUESTO WIDGET:
 
-1. prima di caricare un dataset, questo widget non ha controllo, quindi bisogna fare un metodo che si occupi di disabilitare tutti i widget all'interno di esso.
+1. Prima di caricare un dataset, questo widget non ha controllo, quindi bisogna fare un metodo che si occupi di disabilitare tutti i widget all'interno di esso.
 2. dopo l'importazione di un dataset, questo widget ha controllo, quindi bisogna fare un metodo che si occupi di abilitare tutti i widget all'interno di esso. <br>
     Sarà la mainwindow il widget responsabile di abilitare/disabilitare questo widget a seconda dell'avvenuto caricamento di un dataset. 
 3. Setup:
     1. scorrere la memoria e trovare il prezzo minimo e massimo dei prodotti all'interno del dataset.
     2. inizializzare le spinbox del prezzo con questi due valori.
 4. Una volta ottenuto controllo, il widget accetta valori all'interno del suo valore
+5. una volta presi i valori, questo è quello che dovrebbe succedere nello slot `slotEmitSignalFilter()`.
+
+```cpp
+#include "SubstringMatcher.h"
+#include "PriceMatcher.h"
+void FilterWidget::slotEmitSignalFilter() {
+    Filter* aux = new Filter();
+
+    // setup dei vari matcher a seconda di quali checkbox spuntate
+    if (corresponding_matcher_box->spuntata()) {
+        CorrespondingMatcher* m = new matcher;
+        aux->addMatcher(m);
+    }
+    // ... e via dicendo ...
+
+    emit signalFilter(aux);
+}
+
+```
+
+Quello che deve succedere all'interno dello slot `search(Filter*)` nella mainWindow lo si vede qui:
+
+```cpp
+#include "SubstringMatcher.h"
+#include "PriceMatcher.h"
+void MainWindow::search(Filter* filter) {
+    std::vector<AbstractProduct*> filteredProducts;
+    
+    // scorrere il contenitre e fare questo
+    if (filter.matchesAll(contenitore[i]) {
+        filteredProducts.pushBack(contenitore[i]);
+    }
+
+    render(filteredProducts); // necessità di un metodo render all'interno della mainWindow.
+
+}
+
+```
 
 MODELLAZIONE DELLA CLASSE FILTRO
+Tutto questo è disponibile nell'uml del progetto.
 
 # IDEE
 
