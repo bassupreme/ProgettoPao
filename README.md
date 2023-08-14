@@ -151,7 +151,7 @@ public:
 
 CHI LA COMPIE: bottone presente all'interno della toolbar nella mainWindow => signal clicked() => slot. <br>
 DOVE: lo slot è all'interno della MainWindow chiamato `createItem()`. <br>
-COSA FA: la funzione slot esegue questo. <br>
+COSA FA: la funzione slot esegue il seguente codice. <br>
 
 1. Pulisce la stack di widget all'interno della MainWindow tramite il puntatore `QStackedWidget* stackedWidget` per poi far comparire un widget chiamato `ItemCreator`. <br>
 La soluzione di Zanella riadattata al mio modello della GUI è il seguente:
@@ -163,7 +163,7 @@ void MainWindow::createItem() {
     scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     scroll_area->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     scroll_area->setWidgetResizable(true);
-    ItemCreator* createWidget = new ItemCreator(nullptr, this);
+    ItemCreator* createWidget = new ItemCreator(this); // puntatore alla mainwindow
     scroll_area->setWidget(createWidget);
     stacked_widget->addWidget(scrollArea);
     stacked_widget->setCurrentIndex(1);
@@ -172,13 +172,12 @@ void MainWindow::createItem() {
 }
 ```
 
-2. All'interno dello `SLOT(apply())`, triggerato dal `QPushButton* buttonCreate` all'interno dell' `ItemCreator` controllo che l'identificatore dell' `AbstractProduct*` non sia già presente all'interno del buffer. Siccome il puntatore al buffer è contenuto nella mainWindow, `ItemCreator` deve avere un puntatore alla mainWindow. 
-
-Il buffer internamente è una map\<unsigned int, AbstractProduct\*\>; => la verifica di ciò può essere fatta in questo modo: 
+2. All'interno dello `SLOT(apply())`, triggerato dal `QPushButton* buttonCreate` appartenente all' `ItemCreator` controllo che l'identificatore dell' `AbstractProduct*` non sia già presente all'interno del buffer. Siccome il puntatore al buffer è contenuto nella mainWindow, `ItemCreator` deve avere un puntatore alla mainWindow. 
+Il buffer internamente è una `std::map<unsigned int, AbstractProduct*>` => la verifica di ciò può essere fatta in questo modo: 
 
 `if (buffer[(\*AbstractProduct).getId()] == null) then OK, else NOT OK.`
 
-4. se OK => il prodotto appena creato può essere inserito all'interno del catalogo. In particolare deve essere inserito all'interno del buffer, all'interno del contenitore di AbstractProduct* e deve essere creato un listItem all'interno della scrollArea per poter rappresentare l'oggetto appena creato.
+4. se OK => il prodotto appena creato può essere inserito all'interno del catalogo. In particolare deve essere inserito all'interno del buffer, all'interno di `Contenitore* memoria` di `AbstractProduct*`.
 5. se NOT OK => il prodotto non puà essere inserito. Di conseguenza quello che si può fare è far apparire una finestra di dialogo che dice che il seguente prodotto non può essere inserito.
 
 Il codice è più o meno questo.
@@ -188,7 +187,7 @@ void ItemCreator::apply() {
     Item::AbstractProduct* item = editor->create();
     // setup oggetti che servono per i controlli.
     Buffer* buffer = mainWindow->getBuffer();
-    const std::map<unsigned int, AbstractProduct*>& m = buffer->getMap();
+    const std::map<unsigned int, AbstractProduct*>& m = buffer->getMap(); // const in quanto serve solo in lettura la mappa
 
     if (m[item.getId()) {
         std::cout << "elemento non inserito in quanto l'identificatore esiste già" << std::endl;
