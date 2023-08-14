@@ -184,7 +184,8 @@ Il codice è più o meno questo.
 
 ```cpp
 void ItemCreator::apply() { 
-    Item::AbstractProduct* item = editor->create(); // uno degli editor crea un prodotto e lo allooca nello HEAP
+    // uno degli editor crea un prodotto e lo allooca nello HEAP
+    Item::AbstractProduct* item = editor->create(); 
 
     // setup oggetti che servono per i controlli. 
     Buffer* buffer = mainWindow->getBuffer();
@@ -202,6 +203,7 @@ void ItemCreator::apply() {
     }
 }
 ```
+
 OSSERVAZIONI
 1. metodo `ItemEditor::create()`: secondo la struttura riadattata degli oggetti grafici per la creazione e modifica del prodotto, nella classe `AbstractEditor` deve esserci un metodo create, in quanto ogni editor deve poter creare un AbstractProduct* avente tipo dinamico diverso. <br>
 Il metodo create di un determinato prodotto implementa la logica seguente; prendiamo, per esempio la creazione di un prodotto fisico a noleggio: <br>
