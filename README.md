@@ -65,16 +65,15 @@ MainWindow::showStatus(const QString& status) {
 ```
 
 #### IMPORTAZIONE DATASET 
-Quest'azione corrisponde alla serializzazione degli oggetti (scrittura, da oggetti ad un formato scelto, nel file di dataset creato) <br>
-Nella soluzione di Zanella questo risulta abbastanza chiaro come farlo. in ogni caso per farlo bisogna usare le classi che ho implementato per serializzare/deserializzare i dati <br>
-
+Quest'azione corrisponde alla serializzazione degli oggetti (scrittura, da oggetti ad un formato scelto, nel file di dataset creato). <br>
+Nella soluzione di Zanella questo risulta abbastanza chiaro come farlo. in ogni caso per farlo bisogna usare le classi che ho implementato per serializzare/deserializzare i dati. <br>
 
 CHI LA COMPIE: bottone => signal => slot (bottone della toolbar presente nella mainwindow) <br>
 DOVE: la funzione slot nella main window chiamata loadFromDataset(); <br>
 COSA FA: la funzione serializza i dati in questo modo:
 
 1. Tramite il puntatore a file, legge il contenuto del file => ritorna un std::vector<AbstractProduct*>. <br>
-2. Inserire nel buffer tutti i prodotti. questo torna poi utile per molti tipi di controlli che possono essere fatti sull'inserimento di un nuovo prodotto. 
+2. Inserire sia nel buffer che nella memoria tutti i prodotti. Questo torna poi utile per molti tipi di controlli che possono essere fatti sull'inserimento di un nuovo prodotto. 
 3. Chiama la funzione render all'interno del resultWidget.
 
 L'ultimo punto permette di renderizzare tutti i risultati all'interno del result widget non appena si voglia importare un nuovo dataset. <br>
