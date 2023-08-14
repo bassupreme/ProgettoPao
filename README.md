@@ -54,7 +54,7 @@ MainWindow::createDataset() {
     showStatus("New dataset created.")
 }
 ```
-`showStatus("New dataset created.")` è un metodo dell `mainWindow`.
+`showStatus()` è un metodo dell `mainWindow`.
 
 ```cpp
 MainWindow::showStatus(const QString& status) {
