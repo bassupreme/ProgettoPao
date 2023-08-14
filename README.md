@@ -166,16 +166,16 @@ void MainWindow::createItem() {
     ItemCreator* createWidget = new ItemCreator(this); // puntatore alla mainwindow
     scroll_area->setWidget(createWidget);
     stacked_widget->addWidget(scrollArea);
-    stacked_widget->setCurrentIndex(1);
+    stacked_widget->setCurrentIndex(1); // I Widgget aventi come indice 1 sono quelli che si possono elminare all'interno del metodo clearStack().
     has_unsaved_changes = true;
-    showStatus("Creating a new item.");
+    showStatus("Creating a new item.", 0);
 }
 ```
 
 2. All'interno dello `SLOT(apply())`, triggerato dal `QPushButton* buttonCreate` appartenente all' `ItemCreator` controllo che l'identificatore dell' `AbstractProduct*` non sia già presente all'interno del buffer. Siccome il puntatore al buffer è contenuto nella mainWindow, `ItemCreator` deve avere un puntatore alla mainWindow. 
 Il buffer internamente è una `std::map<unsigned int, AbstractProduct*>` => la verifica di ciò può essere fatta in questo modo: 
 
-`if (buffer[(\*AbstractProduct).getId()] == null) then OK, else NOT OK.`
+`if (buffer[(*AbstractProduct).getId()] == null) then OK, else NOT OK.`
 
 4. se OK => il prodotto appena creato può essere inserito all'interno del catalogo. In particolare deve essere inserito all'interno del buffer, all'interno di `Contenitore* memoria` di `AbstractProduct*`.
 5. se NOT OK => il prodotto non puà essere inserito. Di conseguenza quello che si può fare è far apparire una finestra di dialogo che dice che il seguente prodotto non può essere inserito.
@@ -183,24 +183,27 @@ Il buffer internamente è una `std::map<unsigned int, AbstractProduct*>` => la v
 Il codice è più o meno questo.
 
 ```cpp
-void ItemCreator::apply() {
-    Item::AbstractProduct* item = editor->create();
-    // setup oggetti che servono per i controlli.
+void ItemCreator::apply() { 
+    Item::AbstractProduct* item = editor->create(); // uno degli editor crea un prodotto e lo allooca nello HEAP
+
+    // setup oggetti che servono per i controlli. 
     Buffer* buffer = mainWindow->getBuffer();
+    Memory* memoria = mainWindow->getMemoria();
     const std::map<unsigned int, AbstractProduct*>& m = buffer->getMap(); // const in quanto serve solo in lettura la mappa
 
-    if (m[item.getId()) {
+    if (m[item->getId()) {
         std::cout << "elemento non inserito in quanto l'identificatore esiste già" << std::endl;
         delete item; // questo in quanto, nel caso sia gia' presente un item avente lo stesso id
                      // non serve piu' questo item in memoria.
     } else {
-        (*buffer).insert(item);
-        mainWindow->reloadData(); // dubbio 
-        mainWindow->getSearchWidget()->search(); // dubbio
+        (*buffer).insert(item->getId(), item); // inserimento all'interno del buffer
+        (*memoria).add(item); // inserimento all'interno della memoria
+        mainWindow->search(nullptr); 
     }
 }
 ```
-NOTA BENE: secondo la struttura riadattata degli oggetti grafici per la creazione e modifica del prodotto, nella classe `AbstractEditor` deve esserci un metodo create, in quanto ogni editor deve poter creare un AbstractProduct* avente tipo dinamico diverso. <br>
+OSSERVAZIONI
+1. metodo `ItemEditor::create()`: secondo la struttura riadattata degli oggetti grafici per la creazione e modifica del prodotto, nella classe `AbstractEditor` deve esserci un metodo create, in quanto ogni editor deve poter creare un AbstractProduct* avente tipo dinamico diverso. <br>
 Il metodo create di un determinato prodotto implementa la logica seguente; prendiamo, per esempio la creazione di un prodotto fisico a noleggio: <br>
 
 ```cpp
@@ -215,8 +218,10 @@ AbstractProduct* EditorNoleggio::create() {
 
     // passare alla creazione di AbstractProduct*
     Item::AbstractProduct* item = new Noleggio(identifier, name, description, imagePath, noleggiatore, noleggiante);
+    return item;
 }
 ```
+2. metodo `MainWindow::search(Filter* filtro)`: per capire come funziona fare riferimento alla sezione [ricerca di un prodotto](#ricerca-di-un-prodotto-aggiunto-al-catalogo-mediante-filter-widget)
 
 #### VISUALIZZAZIONE DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 Questo in realtà è abbastanza opzionale in quanto una visualizzazione (lista di ListItem nella scrollbar) la si ha già.  
@@ -482,19 +487,30 @@ Quello che deve succedere all'interno dello slot `search(Filter*)` nella mainWin
 ```cpp
 #include "SubstringMatcher.h"
 #include "PriceMatcher.h"
-void MainWindow::search(Filter* filter) {
-    std::vector<AbstractProduct*> filteredProducts;
-    
-    // scorrere il contenitre e fare questo
-    if (filter.matchesAll(contenitore[i]) {
-        filteredProducts.pushBack(contenitore[i]);
-    }
 
+void MainWindow::search(Filter* filter) {
+
+    // setup oggetti grafici
+    clearstack(); // pulisce la stack da vari elementi che non siano il resultWidget
+    stackedWidget->addWidget(resultsWidget); // aggiunge il result widget alla stack.
+    stackedWidget->setCurrentIndex(0); // setta il result widget come quello principale (indice 0).
+    
+    // SETUP RICERCA
+    std::vector<AbstractProduct*> filteredProducts; 
+
+    if (filter == nullptr) { // nel caso in cui non siano stati fatti alcuni filtri.
+        filteredProducts = getBuffer()->readAll(); 
+    } else {
+    // scorrere il contenitre e fare questo
+        if (filter.matchesAll(contenitore[i]) {
+            filteredProducts.pushBack(contenitore[i]);
+        }
+    }
     render(filteredProducts); // necessità di un metodo render all'interno della mainWindow.
 
 }
-
 ```
+
 COSA SUCCEDE SE 
 1. Si vuole applicare un nuovo filtro.
 2. Si vuol resettare il filterWidget con nessun filtro
@@ -520,7 +536,6 @@ FilterWidget::~FilterWidget() {
     destroy();    
 }
 
-
 ```
 
 MODELLAZIONE DELLA CLASSE FILTRO
@@ -533,7 +548,6 @@ Le azioni che vanno ad usare il rendere degli elementi grafici sono:
 3. [modifica di un prodotto](#modifica-di-un-prodotto-aggiunto-al-catalogo)
 
 Nel resultWidget è disponibile un metodo `renderResults(std::vector<AbstractProcut*>)`. <br>
-
 
 # IDEE
 
