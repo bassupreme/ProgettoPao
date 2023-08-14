@@ -29,12 +29,40 @@
 #### CREAZIONE FILE DATASET 
 (la soluzione sta semplicemente nel vedere l'implementazione del boy zanella) <br>
 CHI LA COMPIE: bottone => signal => slot (bottone della toolbar presente nella mainwindow) <br>
-DOVE: la funzione che crea il dataset deve essere uno slot della mainWindow <br>
-OPZIONALE: questo slot possiamo far si che richiami la funzione di importazione del dataset, cosi' che in automatico la creazione del dataset ne comporti subito l'importazione. <br>
-COSA FA: la funzione crea un nuovo file all'interno della cartella selezionata. Poi esegue questi passi (in ordine):
+DOVE: la funzione che crea il dataset deve essere uno slot della mainWindow `void createDataset()`. <br>
+COSA FA: la funzione crea un nuovo file all'interno della cartella selezionata.
 
-1. richiama la funzione di importazione del dataset.
-2. siccome e' nella mainWindow => ha accesso ai suoi campi privati => mediante i puntatori ai widget richiama i metodi per fornire controllo ad essi, e quindi abilitarli.
+```cpp
+#include <>
+MainWindow::createDataset() {
+    // copiare l'implementazione di zanella
+    QString path = QFileDialog::getSaveFileName(
+        this,
+        "Creates new Dataset",
+        "./",
+        "JSON files *.json"
+    ); 
+    if (path.isEmpty()) { // questo serve in caso l'utente non abbia creato alcun file
+        return;
+    }
+    if (buffer != nullptr) { // controllo che serve per controllare se nel buffer vi siano oggetti. 
+        delete buffer;
+    }
+    buffer = new Buffer();
+    memoria.clear();
+    create_item->setEnabled(true);
+    showStatus("New dataset created.")
+}
+```
+`showStatus("New dataset created.")` è un metodo dell `mainWindow`.
+
+```cpp
+MainWindow::showStatus(const QString& status) {
+    statusBar()->showMessage(status, 5000);
+    // 5000 specifica per millisecondi il messagio rimane attivo nella status bar. 
+}
+
+```
 
 #### IMPORTAZIONE DATASET 
 Quest'azione corrisponde alla serializzazione degli oggetti (scrittura, da oggetti ad un formato scelto, nel file di dataset creato) <br>
