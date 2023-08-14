@@ -12,7 +12,7 @@ Fisico& Fisico::setUsato(bool u) {
 }
 
 void Fisico::accept(IProductVisitor* v) {
-    v->visit(this);
+    v->visit(*this);
 }
 
 void Fisico::accept(IConstProductVisitor* v) {

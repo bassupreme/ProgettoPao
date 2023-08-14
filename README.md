@@ -30,8 +30,7 @@
 (la soluzione sta semplicemente nel vedere l'implementazione del boy zanella) <br>
 CHI LA COMPIE: bottone => signal => slot (bottone della toolbar presente nella mainwindow) <br>
 DOVE: la funzione che crea il dataset deve essere uno slot della mainWindow <br>
-OPZIONALE: questo slot possiamo far si che richiami la funzione di importazione del dataset, cosi' che in automatico la creazione del dataset <br>
-ne comporti subito l'importazione.
+OPZIONALE: questo slot possiamo far si che richiami la funzione di importazione del dataset, cosi' che in automatico la creazione del dataset ne comporti subito l'importazione. <br>
 COSA FA: la funzione crea un nuovo file all'interno della cartella selezionata. Poi esegue questi passi (in ordine):
 
 1. richiama la funzione di importazione del dataset.
@@ -80,22 +79,15 @@ DOVE: la funzione slot nella main window chiamata `writeToFile();` <br>
 COSA FA: tramite puntatore al file `jsonFile JsonFile*`  nella MainWindow, si utilizza il metodo WriteTo(const vector<AbstractProduct*>&, const JsonConverter&); <br>
 All'interno del signal `writeToFile()`: 
 
-1. Prendere il contenuto del buffer (tramite il puntatore presente nella MainWindow) e mettere tutti i valori all'interno di un <br>
-`std::vector<AbstractProduct*> x`.
-2. Passare `x` alla funzione JsonFile& WriteTo. Questa garantisce di scrivere all'interno del file che si trova al percorso <br>
+1. Prendere il contenuto del buffer tramite il puntatore presente nella MainWindow; questo lo si fa con il metodo ReadAll() presente all'interno del buffer.<br>
+2. Passare il vettore alla funzione JsonFile& WriteTo. Questa garantisce di scrivere gli oggetti in formato json all'interno del file che si trova al percorso <br>
 specificato dall'oggetto puntato dal puntatore AbstractFile* presente nella MainWindow. <br>
-NOTA BENE: Questa funzione lascia intatto il buffer.
+NOTA BENE: Questa funzione lascia intatto il buffer. 
 
 ```cpp
 void writeDataset() {
-    std::vector<AbstractProduct*> aux();
+    std::vector<AbstractProduct*> aux = buffer->readAll(); // readAll
 
-    for(std::vector<AbstractProduct*>::iterator it = aux.begin(); 
-        it != aux.end(); 
-        it++) {
-        aux.pushBack(buffer[(*it)->getId()]);
-    }
-    
     JsonReader reader();
     JsonConverter converter(reader);
     fileHandle->writeToFile(aux, converter);
@@ -120,9 +112,9 @@ class JsonVisitor: public IConstProductVisitor {
 private:
     QJsonObject jsonObject;
 public:
-    virtual void visit(const Virtuale*);
-    virtual void visit(const Fisico*);
-    virtual void visit(const Noleggio*);
+    virtual void visit(const Virtuale&);
+    virtual void visit(const Fisico&);
+    virtual void visit(const Noleggio&);
     QJsonObject getJsonObject();
 };
 
