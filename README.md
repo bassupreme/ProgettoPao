@@ -231,7 +231,7 @@ Questo in realtà è abbastanza opzionale in quanto una visualizzazione (lista d
 #### MODIFICA DI UN PRODOTTO AGGIUNTO AL CATALOGO.
 
 CHI LA COMPIE: bottone presente all'interno del ListItem => signal clicked => slot. <br>
-DOVE: lo slot è all'interno della mainWindow. <br>
+DOVE: lo slot è all'interno della mainWindow: `void editItem(AbstractProduct*)`. <br>
 PROBLEMI: praticamente sono le stesse problematiche dell'eliminazione di un prodotto in termini di segnali e slot con qualche complicazione aggiuntiva. <br>
 Per vedere la propagazione di `AbstractProduct*` alla mainwindow, andare alla sezione di [eliminazione](#eliminazione-di-un-prodotto-aggiunto-al-catalogo)
 
@@ -262,9 +262,9 @@ class Noleggio;
 class IConstProductVisitor {
 public:
     virtual ~IConstProductVisitor() {};
-    virtual void visit(const Virtuale*) = 0;
-    virtual void visit(const Fisico*) = 0;
-    virtual void visit(const Noleggio*) = 0;
+    virtual void visit(const Virtuale&) = 0;
+    virtual void visit(const Fisico&) = 0;
+    virtual void visit(const Noleggio&) = 0;
 };
 ```
 Quindi possiamo creare una classe ItemEditorRender che implementa quest'interfaccia. la classe è fatta in questo modo:
@@ -276,18 +276,18 @@ class ItemEditorRenderer : public IConstVisitor {
 private:
 	QWidget* widget;
 public:
-	virtual void visit(const Virtuale*);
-	virtual void visit(const Fisico*);
-	virtual void visit(const Noleggio*);	
+	virtual void visit(const Virtuale&);
+	virtual void visit(const Fisico&);
+	virtual void visit(const Noleggio&);	
 	QWidget* getRenderedWidget() const;
 };
 ```
 Ognuno di questi metodi ha un implementazione diversa, analoga al seguente esempio: 
 
 ```cpp
-virtual void visit(const Fisico* element) {
+virtual void visit(const Fisico& element) {
     // render EditorFisico* di tipo QWidget.
-    EditorFisico* editor = new EditorFisico(nullptr, element);
+    EditorFisico* editor = new EditorFisico(nullptr, &element);
     widget = editor;
 }
 ```
