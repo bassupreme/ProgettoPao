@@ -296,7 +296,7 @@ A questo punto, il signal updateItem() diventa così.
 ```cpp
 void MainWindow::updateItem(AbstractProduct* item) {
     stackedWidget->clearstack(); // copiare questo metodo da Zanella. 
-    IConstVisitor* editorRenderer = new ItemEditorRenderer(item);
+    IConstVisitor* editorRenderer = new ItemEditorRenderer();
     item.accept(editorRenderer);
     QWidget* editor = editorRenderer.getRenderedWidget();
     stackedWidget->addWidget(editor);
