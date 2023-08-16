@@ -389,7 +389,7 @@ void AbstractEditor::update() {
         (mainWindow->getBuffer())->modify(currentId, subject);
         mainWindow->setUnsavedChanges(true);
     } else  { // vuol dire che ho un id che non corrisponde piu' al prodotto
-        if (mainWindow->getBuffer()[currentId] == nullptr) {
+        if (!(mainWindow->getBuffer()->exists(currentId))) {
         // rimuovere l'elemento precedente dalla map
         (mainWindow->getBuffer())->erase(previosId);
         // effettuare la modifica all'elemento in memoria
