@@ -348,8 +348,7 @@ private:
     QPushButton* applyChangesButton; // AGGIUNTO
 public:
 	virtual ~AbstractEditor() {};
-	AbstractEditor(AbstractProduct* item, QWidget* parent = nullptr) : QWidget(parent), subject(item) {} // costruttore di default.
-    void setMainWindow(MainWindow* w); // AGGIUNTO
+	AbstractEditor(QMainWindow* window, AbstractProduct* item, QWidget* parent = nullptr) : QWidget(parent), mainWindow(window), subject(item) {} // costruttore di default.
 public slots:
     void update();  
     void create(); 
