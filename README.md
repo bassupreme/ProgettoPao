@@ -400,6 +400,7 @@ void AbstractEditor::update() {
         mainWindow->setUnsavedChanges(true);
         } else {
             // errore. l'item non puo' essere modificat in quanto l'id è stato modificato in modo poco opportuno
+            std::cout << "errore durante la modifica del prodotto" << std::endl;
         }
     }
     // In ogni caso
@@ -448,7 +449,7 @@ Lo slot `slotItemDeleted()` all'interno di `ListItem` implementa la seguente log
 
 ```cpp
 ListItem::slotItemSelected() {
-    emit(item);
+    emit signalDeletedItem(item);
 }
 
 ```
@@ -465,6 +466,22 @@ ResultsWidget::ResultsWidget(QWidget* parent) : QWidget(parent) {
         ListItem* listItem = new ListItem(this, *it);        
         connect(listItem, SIGNAL(signalDeltedItem(AbstractProduct*), mainWindow, SLOT(deleteItem(AbstractProduct*)));
     }
+}
+```
+
+La soluzione più semplice per l'implementazione di `void deleteItem(AbstractProduct*)` all'interno della mainWindow è la seguente.
+
+```cpp
+void MainWindow::deleteItem(AbstractProduct* item) {
+    // pulire la stack dei widget
+    clearstack();
+
+    // deallocare la memoria del prodotto
+    buffer->delete(item);
+    memoria->delete(item);
+
+    // refreshare il resultWidget
+    search(nullptr);
 }
 ```
 
