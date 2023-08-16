@@ -367,11 +367,49 @@ All'interno del metodo update posso fare tutto quello che c'è da fare in quanto
 1. Controllare se l'update che si vuole applicare sia fattibile oppure no; in caso lo fosse:
     1. Richiamare l'update dell'item all'interno dela mainWindow tramite l'api della memoria.
     2. Richiamare l'update del buffer tramite la sua API.
-    3. fare il refresh degli elementi grafici (*)
+    3. fare il refresh degli elementi grafici.
 
+Il metodo update è piu' o meno il seguente.
+
+```cpp
+void AbstractEditor::update() {
+    // prendere valori da oggetti grafici.
+    
+
+    unsigned int previousId = subject->getIdentifier();
+    unsigned int currentId  = boxId->getText();
+        
+    if (previousId == currentId) {
+        // ok modifico tutto  
+        subject->setId(currentId);
+        // prendo gli oggetti grafici e setto quello che c'e da settare.
+        
+        // ...
+        (mainWindow->getMemoria())->update(subject);
+        (mainWindow->getBuffer())->modify(currentId, subject);
+        mainWindow->setUnsavedChanges(true);
+    } else  { // vuol dire che ho un id che non corrisponde piu' al prodotto
+        if (mainWindow->getBuffer()[currentId] == nullptr) {
+        // rimuovere l'elemento precedente dalla map
+        (mainWindow->getBuffer())->erase(previosId);
+        // effettuare la modifica all'elemento in memoria
+        (mainWindow->getBuffer())->modify(currentId, subject);
+        // aggiungerlo al buffer
+        (mainWindow->getMemoria())->update(subject);
+        // settare cambiamenti non salvati
+        mainWindow->setUnsavedChanges(true);
+        } else {
+            // errore. l'item non puo' essere modificat in quanto l'id è stato modificato in modo poco opportuno
+        }
+    }
+    // In ogni caso
+    mainWindow->clearStack(); // importante 
+    mainWindow->search(nullptr); // importante
+}
+```
 REFRESH ELEMENTI GRAFICI
 All'interno del ResultsWidget, ho un `std::vector<ListItem*>`.  <br>
-Dato che, nella MainWindow vi è un puntatore al fantastico oggetto resultsWidget, quello che posso fare è creare <br>
+Dato che, nella MainWindow vi è un puntatore all'oggetto resultsWidget, quello che posso fare è creare <br>
 un metodo refresh(), da porre all'interno della MainWindow.
 
 Questo metodo scorre il buffer di elementi e, per ogni elemento (\*) aggiorna il contenuto. <br>
