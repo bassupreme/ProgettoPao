@@ -233,7 +233,6 @@ Questo in realtà è abbastanza opzionale in quanto una visualizzazione (lista d
 CHI LA COMPIE: bottone presente all'interno del ListItem => signal clicked => slot. <br>
 DOVE: lo slot è all'interno della mainWindow: `void editItem(AbstractProduct*)`. <br>
 PROBLEMI: praticamente sono le stesse problematiche dell'eliminazione di un prodotto in termini di segnali e slot con qualche complicazione aggiuntiva. <br>
-Per vedere la propagazione di `AbstractProduct*` alla mainwindow, andare alla sezione di [eliminazione](#eliminazione-di-un-prodotto-aggiunto-al-catalogo)
 
 1. La modifica dipende dal tipo del prodotto che si vuole modificare.
 2. L'editor di un prodotto deve poter modificare il prodotto "giusto", nel senso che deve modificare il prodotto puntato dal listItem che ha segnalato <br> 
@@ -242,7 +241,7 @@ il click del pulsante edit.
 
 SOLUZIONE 1: Dato che ogni listItem ha un bottone modifica prodotto => signal. <br>
 Questo signal deve essere connesso ad uno slot presente nella mainWindow chiamato `updateItem(AbstractProduct*)`.
-Per la propagazione del segnale vedere la soluzione descritta nel problema dell'eliminazione. <br>
+Per vedere la propagazione di `AbstractProduct*` alla mainwindow, andare alla sezione di [eliminazione](#eliminazione-di-un-prodotto-aggiunto-al-catalogo)
 
 Siamo ora all'interno della funzione `updateItem(AbstractProduct*)`:
 
