@@ -9,24 +9,32 @@
 // direttive d'uso
 using std::cout;
 using std::endl;
-using std::string;
 
 // classe astratta
 class AbstractProduct {
-private:
-    const unsigned int id; 
-    float prezzo;
-    string nome;
-public:
-    AbstractProduct(const unsigned int i, float p, string n = "product");
-    virtual ~AbstractProduct();
-    const unsigned int getId() const; 
-    const float& getPrezzo() const; 
-    AbstractProduct& setPrezzo(const float& p); 
-    const string& getNome() const; 
-    AbstractProduct& setNome(const string& n); 
-    virtual void accept(IProductVisitor* v) = 0;
-    virtual void accept(IConstProductVisitor* v) = 0;
+	private:
+		unsigned int id; 
+		float prezzo;
+		std::string nome;
+		std::string imagePath;
+		std::string description;
+	public:
+		// costruttore standard e distruttore standard
+		AbstractProduct(const unsigned int i, float p, std::string n, std::string path, std::string description);
+		virtual ~AbstractProduct();
+		// getters e setters
+		const unsigned int getId() const; 
+		const float& getPrezzo() const; 
+		AbstractProduct& setPrezzo(const float& p); 
+		const string& getNome() const; 
+		AbstractProduct& setNome(const string& n); 
+		const std::string& getImagePath() const;
+		AbstractProduct& setImagePath(const std::string& path);
+		const std::string& getDescription() const;
+		AbstractProduct& setDescription(const std::string& des);
+		// metodi virtuali puri
+		virtual void accept(IProductVisitor* v) = 0;
+		virtual void accept(IConstProductVisitor* v) = 0;
 };
 
 #endif
