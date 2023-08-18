@@ -524,8 +524,10 @@ void FilterWidget::slotEmitSignalFilter() {
     Filter* aux = new Filter(); 
 
     // setup dei vari matcher a seconda di quali checkbox spuntate
-    if (corresponding_matcher_box->spuntata()) {
-        CorrespondingMatcher* m = new matcher();
+    if (boxPrezzo->spuntata()) { // esempio con il filtro del prezzo
+        const unsigned int lb = lbbox->getValore();
+        const unsigned int ub = ubbox->getValore();
+        IMatcher* m = new PriceMatcher(lb, ub);
         aux->addMatcher(m);
     }
     // ... e via dicendo ...
