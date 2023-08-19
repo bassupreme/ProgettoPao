@@ -10,9 +10,12 @@ CONFIG -= app_bundle
 SOURCES += \
         AbstractProduct.cpp \
         Buffer.cpp \
+        Filter.cpp \
         Fisico.cpp \
         Memory.cpp \
         Noleggio.cpp \
+        PriceMatcher.cpp \
+        SubstringMatcher.cpp \
         Virtuale.cpp \
         main.cpp
 
@@ -25,9 +28,13 @@ HEADERS += \
     AbstractProduct.h \
     Buffer.h \
     Container.h \
+    Filter.h \
     Fisico.h \
     IConstVisitor.h \
+    IMatcher.h \
     IVisitor.h \
     Memory.h \
     Noleggio.h \
+    PriceMatcher.h \
+    SubstringMatcher.h \
     Virtuale.h

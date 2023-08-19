@@ -54,16 +54,22 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../testBuffer/AbstractProduct.cpp \
 		../testBuffer/Buffer.cpp \
+		../testBuffer/Filter.cpp \
 		../testBuffer/Fisico.cpp \
 		../testBuffer/Memory.cpp \
 		../testBuffer/Noleggio.cpp \
+		../testBuffer/PriceMatcher.cpp \
+		../testBuffer/SubstringMatcher.cpp \
 		../testBuffer/Virtuale.cpp \
 		../testBuffer/main.cpp 
 OBJECTS       = AbstractProduct.o \
 		Buffer.o \
+		Filter.o \
 		Fisico.o \
 		Memory.o \
 		Noleggio.o \
+		PriceMatcher.o \
+		SubstringMatcher.o \
 		Virtuale.o \
 		main.o
 DIST          = /home/leonardo/Qt/6.4.2/gcc_64/mkspecs/features/spec_pre.prf \
@@ -211,16 +217,23 @@ DIST          = /home/leonardo/Qt/6.4.2/gcc_64/mkspecs/features/spec_pre.prf \
 		../testBuffer/testBuffer.pro ../testBuffer/AbstractProduct.h \
 		../testBuffer/Buffer.h \
 		../testBuffer/Container.h \
+		../testBuffer/Filter.h \
 		../testBuffer/Fisico.h \
 		../testBuffer/IConstVisitor.h \
+		../testBuffer/IMatcher.h \
 		../testBuffer/IVisitor.h \
 		../testBuffer/Memory.h \
 		../testBuffer/Noleggio.h \
+		../testBuffer/PriceMatcher.h \
+		../testBuffer/SubstringMatcher.h \
 		../testBuffer/Virtuale.h ../testBuffer/AbstractProduct.cpp \
 		../testBuffer/Buffer.cpp \
+		../testBuffer/Filter.cpp \
 		../testBuffer/Fisico.cpp \
 		../testBuffer/Memory.cpp \
 		../testBuffer/Noleggio.cpp \
+		../testBuffer/PriceMatcher.cpp \
+		../testBuffer/SubstringMatcher.cpp \
 		../testBuffer/Virtuale.cpp \
 		../testBuffer/main.cpp
 QMAKE_TARGET  = testBuffer
@@ -538,8 +551,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /home/leonardo/Qt/6.4.2/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../testBuffer/AbstractProduct.h ../testBuffer/Buffer.h ../testBuffer/Container.h ../testBuffer/Fisico.h ../testBuffer/IConstVisitor.h ../testBuffer/IVisitor.h ../testBuffer/Memory.h ../testBuffer/Noleggio.h ../testBuffer/Virtuale.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../testBuffer/AbstractProduct.cpp ../testBuffer/Buffer.cpp ../testBuffer/Fisico.cpp ../testBuffer/Memory.cpp ../testBuffer/Noleggio.cpp ../testBuffer/Virtuale.cpp ../testBuffer/main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../testBuffer/AbstractProduct.h ../testBuffer/Buffer.h ../testBuffer/Container.h ../testBuffer/Filter.h ../testBuffer/Fisico.h ../testBuffer/IConstVisitor.h ../testBuffer/IMatcher.h ../testBuffer/IVisitor.h ../testBuffer/Memory.h ../testBuffer/Noleggio.h ../testBuffer/PriceMatcher.h ../testBuffer/SubstringMatcher.h ../testBuffer/Virtuale.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../testBuffer/AbstractProduct.cpp ../testBuffer/Buffer.cpp ../testBuffer/Filter.cpp ../testBuffer/Fisico.cpp ../testBuffer/Memory.cpp ../testBuffer/Noleggio.cpp ../testBuffer/PriceMatcher.cpp ../testBuffer/SubstringMatcher.cpp ../testBuffer/Virtuale.cpp ../testBuffer/main.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -598,6 +611,13 @@ Buffer.o: ../testBuffer/Buffer.cpp ../testBuffer/Buffer.h \
 		../testBuffer/IConstVisitor.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Buffer.o ../testBuffer/Buffer.cpp
 
+Filter.o: ../testBuffer/Filter.cpp ../testBuffer/Filter.h \
+		../testBuffer/IMatcher.h \
+		../testBuffer/AbstractProduct.h \
+		../testBuffer/IVisitor.h \
+		../testBuffer/IConstVisitor.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Filter.o ../testBuffer/Filter.cpp
+
 Fisico.o: ../testBuffer/Fisico.cpp ../testBuffer/Fisico.h \
 		../testBuffer/AbstractProduct.h \
 		../testBuffer/IVisitor.h \
@@ -617,6 +637,20 @@ Noleggio.o: ../testBuffer/Noleggio.cpp ../testBuffer/Noleggio.h \
 		../testBuffer/IVisitor.h \
 		../testBuffer/IConstVisitor.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Noleggio.o ../testBuffer/Noleggio.cpp
+
+PriceMatcher.o: ../testBuffer/PriceMatcher.cpp ../testBuffer/PriceMatcher.h \
+		../testBuffer/IMatcher.h \
+		../testBuffer/AbstractProduct.h \
+		../testBuffer/IVisitor.h \
+		../testBuffer/IConstVisitor.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o PriceMatcher.o ../testBuffer/PriceMatcher.cpp
+
+SubstringMatcher.o: ../testBuffer/SubstringMatcher.cpp ../testBuffer/SubstringMatcher.h \
+		../testBuffer/IMatcher.h \
+		../testBuffer/AbstractProduct.h \
+		../testBuffer/IVisitor.h \
+		../testBuffer/IConstVisitor.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SubstringMatcher.o ../testBuffer/SubstringMatcher.cpp
 
 Virtuale.o: ../testBuffer/Virtuale.cpp ../testBuffer/Virtuale.h \
 		../testBuffer/AbstractProduct.h \
@@ -732,7 +766,9 @@ main.o: ../testBuffer/main.cpp /home/leonardo/Qt/6.4.2/gcc_64/include/QtCore/QCo
 		../testBuffer/Virtuale.h \
 		../testBuffer/Fisico.h \
 		../testBuffer/Noleggio.h \
-		../testBuffer/Buffer.h
+		../testBuffer/Buffer.h \
+		../testBuffer/Memory.h \
+		../testBuffer/Container.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../testBuffer/main.cpp
 
 ####### Install

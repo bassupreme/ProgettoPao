@@ -11,9 +11,17 @@ Memory &Memory::remove(AbstractProduct* product){
     return *this;
 }
 
-std::vector<const AbstractProduct *> Memory::search() {
+std::vector<const AbstractProduct *> Memory::search(Filter* filtro) {
     std::vector<const AbstractProduct*> aux;
-    // implementazione con la classe filtro
+    Container<const AbstractProduct*>::Node* head = container.getHead();
+
+    while(head != nullptr) {
+        const AbstractProduct* t = head->getData();
+        if (filtro->matchesAll(*t)) {
+            aux.push_back(t);
+        }
+        head = head->getNext();
+    }
     return aux;
 }
 

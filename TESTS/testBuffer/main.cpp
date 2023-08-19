@@ -6,15 +6,18 @@
 #include "Fisico.h"
 #include "Noleggio.h"
 #include "Buffer.h"
+#include "Filter.h"
+#include "PriceMatcher.h"
+#include "SubstringMatcher.h"
 #include "Memory.h"
 
 int main()
 {
     // CREAZIONE PRODOTTI NELLA MEMORIA HEAP
     AbstractProduct* p1 = new Fisico(1, 2.0, "Carica batterie", "", "descrizione");
-    AbstractProduct* p2 = new Fisico(2, 2.0, "Zaino", "", "descrizione");
-    AbstractProduct* p3 = new Fisico(3, 2.0, "Portachiavi", "", "descrizione");
-    AbstractProduct* p4 = new Fisico(4, 2.0, "Righello", "", "descrizione");
+    AbstractProduct* p2 = new Fisico(2, 2.0, "porta oggetti", "", "descrizione");
+    AbstractProduct* p3 = new Fisico(3, 2.0, "porta chiavi", "", "descrizione");
+    AbstractProduct* p4 = new Fisico(4, 2.0, "righello", "", "descrizione");
 
     // TEST BUFFER
     /*
@@ -72,6 +75,18 @@ int main()
     m.remove(p4);
 
     // TEST RICERCA
+    IMatcher* matcher1 = new SubstringMatcher("porta");
+    Filter* filter = new Filter();
+    filter->addMatcher(matcher1);
+
+    std::vector<const AbstractProduct*> risultati = m.search(filter);
+
+    // stampa risultati
+    for(std::vector<const AbstractProduct*>::const_iterator it = risultati.begin(); it != risultati.end(); it++) {
+        std::cout << "id: " << (*it)->getId() << " | nome: " <<  (*it)->getNome() << std::endl;
+    }
+
+    delete filter;
 
 
     // TEST PULIZIA
